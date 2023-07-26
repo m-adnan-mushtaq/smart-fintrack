@@ -1,34 +1,73 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SmartFinTrack
+
+<center>
+    <img src="https://github.com/devicons/devicon/blob/master/icons/nextjs/nextjs-original.svg" title="NextJs" alt="NextJs" width="40" height="40"/>&nbsp;
+    <img src="https://github.com/devicons/devicon/blob/master/icons/postgresql/postgresql-original.svg" title="Postgress" alt="Postgress" width="40" height="40"/>&nbsp;
+    <img src="https://github.com/devicons/devicon/blob/master/icons/typescript/typescript-original.svg" title="Typescript" alt="Typescript" width="40" height="40"/>&nbsp;
+    <img src="https://github.com/devicons/devicon/blob/master/icons/tailwindcss/tailwindcss-plain.svg" title="Tailwind css" alt="Tailwind Css" width="40" height="40"/>&nbsp;
+
+</center>
+SmartFinTrack is a finance management website built using Next.js, PostgresSQL, Prisma, Tailwind CSS, and NextAuth.js for authentication. The application aims to help users manage their finances effectively by providing budgeting tools, income tracking, expense tracking, savings goals, bill reminders, and more.
+
+## Features
+
+- **Budgeting Tools:** SmartFinTrack offers pre-designed budget templates and the flexibility to create custom budgets. Users can allocate their income into different spending categories and track their expenses accordingly.
+
+- **Income Tracking:** Users can manually enter their income data and view income trends over time. SmartFinTrack provides visualization tools to help users understand their various income sources.
+
+- **Expense Tracking:** Track expenses with ease by categorizing and managing spending. Users can upload receipts and split expenses for better financial tracking.
+
+- **Savings Goals:** Set and manage savings goals to work towards financial milestones. SmartFinTrack provides calculators to help users plan their savings effectively.
+
+- **Bill Reminders:** Receive email notifications for bill payment due dates to avoid late payments and potential penalties.
+
+## Tech Stack
+
+- Frontend: Next.js and Tailwind CSS
+- Backend: NextAuth.js for authentication, Prisma as the ORM, and PostgresSQL as the database.
 
 ## Getting Started
 
-First, run the development server:
+Follow these steps to set up and run SmartFinTrack on your local machine:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+1. Clone the repository:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   ```bash
+   git clone https://github.com/m-adnan-mushtaq/smart-fintrack
+   cd SmartFinTrack
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. Install dependencies:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+   ```bash
+   pnpm install
+   ```
 
-## Learn More
+3. Configure Environment Variables:
 
-To learn more about Next.js, take a look at the following resources:
+   - Rename `.env` to `.env.local` and update the required environment variables for your database and NextAuth.js configuration.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. Run Migrations:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   ```bash
+   npx prisma migrate dev
+   ```
 
-## Deploy on Vercel
+5. Start the development server:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   pnpm run dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+6. Access SmartFinTrack on `http://localhost:3000` in your web browser.
+
+## Contributing
+
+Contributions to SmartFinTrack are welcome! Feel free to open issues for bug reports or feature requests. If you'd like to contribute code, please create a pull request.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+## Author
+Adnan Malik Reach Me at [LinkedIn](https://www.linkedin.com/in/m-adnan-mushtaq)
