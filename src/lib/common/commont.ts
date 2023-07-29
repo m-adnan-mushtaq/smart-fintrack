@@ -1,3 +1,5 @@
+import { InputLabel } from "../types/types";
+
 export const features: Feature[] = [
   {
     title: "Budgeting Tools",
@@ -43,3 +45,29 @@ export const menuLinks:MenuLink[] = [
     path: "/forum",
   },
 ];
+
+export const logInputs: InputLabel[] = [
+  {
+    name: "email",
+    type: "email",
+    title: "What's your email?",
+    message: "Enter a valid email address!",
+  },
+  {
+    name: "password",
+    type: "password",
+    title: "Enter your password!",
+    message: "Minimum 5 characters!",
+  },
+];
+
+export const joinInputs:InputLabel[]=[
+  {
+    name: "Name",
+    type: "text",
+    title: "What's your Name?",
+    message: "Use only letters or numbers!",
+    sizes:"w-full max-w-sm",
+  },
+  ...logInputs
+]

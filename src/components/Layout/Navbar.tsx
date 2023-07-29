@@ -2,8 +2,6 @@ import { menuLinks } from "@/lib/common/commont";
 import Link from "next/link";
 import Logo from "./Logo";
 
-
-
 const MenuLinks = () => (
   <>
     {menuLinks.map((link:MenuLink) => (
@@ -21,7 +19,7 @@ const Navbar = () => {
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
+              className="h-7 w-7"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -49,7 +47,7 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <a className="btn btn-secondary">Log IN</a>
+        <Link href="/auth" className="btn btn-secondary">Log IN</Link>
       </div>
     </div>
   );

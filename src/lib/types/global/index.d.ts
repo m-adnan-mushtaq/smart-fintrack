@@ -8,3 +8,5 @@ declare interface MenuLink {
   label: string;
   path: string;
 }
+
+declare type NullableString=string|undefined
