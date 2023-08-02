@@ -1,14 +1,21 @@
 import Section from "@components/Home/Section";
 import Hero from "@components/Home/Hero";
 import Image from "next/image";
-import Footer from "@/components/Layout/Footer";
 import { features } from "@/lib/common/commont";
+import Faq from "@/components/Home/Faq";
+import LazyLoader from "@/components/Layout/LazyLoader";
 const Home = () => {
   return (
     <>
       <div className="text-center relative flex items-center flex-col">
-        {["feature_1", "feature_2", "feature_3", "feature_4", "feature_5"].map(
-          (img) => (
+        <LazyLoader>
+          {[
+            "feature_1",
+            "feature_2",
+            "feature_3",
+            "feature_4",
+            "feature_5",
+          ].map((img) => (
             <Image
               key={img}
               id={img}
@@ -19,21 +26,23 @@ const Home = () => {
               width={940}
               height={400}
             />
-          )
-        )}
+          ))}
+        </LazyLoader>
       </div>
       <Hero />
-      <div className="features-container">
-        {features.map((feature: Feature) => (
-          <Section
-            key={feature.imgId}
-            title={feature.title}
-            tagline={feature.tagline}
-            imgId={feature.imgId}
-          />
-        ))}
-      </div>
-      <Footer />
+      <LazyLoader>
+        <div className="features-container">
+          {features.map((feature: Feature) => (
+            <Section
+              key={feature.imgId}
+              title={feature.title}
+              tagline={feature.tagline}
+              imgId={feature.imgId}
+            />
+          ))}
+        </div>
+      </LazyLoader>
+      <Faq />
     </>
   );
 };

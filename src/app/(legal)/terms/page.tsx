@@ -1,6 +1,6 @@
 const TermsPage = () => {
   return (
-    <div className="p-4">
+    <div className="py-4 max-w-screen-lg mx-auto">
       <h2 className="text-4xl text-center text-secondary font-bold">
         <strong>Terms and Conditions</strong>
       </h2>

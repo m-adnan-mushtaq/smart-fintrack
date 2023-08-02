@@ -1,16 +1,8 @@
-import { menuLinks } from "@/lib/common/commont";
 import Link from "next/link";
 import Logo from "./Logo";
+import MenuLinks from "./MenuLinks";
 
-const MenuLinks = () => (
-  <>
-    {menuLinks.map((link:MenuLink) => (
-      <li key={link.path}>
-        <Link href={link.path}>{link.label}</Link>
-      </li>
-    ))}
-  </>
-);
+
 const Navbar = () => {
   return (
     <div className="navbar bg-base-100 shadow-lg px-4">
@@ -36,18 +28,20 @@ const Navbar = () => {
             tabIndex={0}
             className="menu menu-sm capitalize dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
-            <MenuLinks/>
+            <MenuLinks />
           </ul>
         </div>
-       <Logo/>
+        <Logo />
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal capitalize px-1">
-          <MenuLinks/>
+          <MenuLinks />
         </ul>
       </div>
       <div className="navbar-end">
-        <Link href="/auth" className="btn btn-secondary">Log IN</Link>
+        <Link href="/auth" className="btn btn-secondary">
+          Log IN
+        </Link>
       </div>
     </div>
   );

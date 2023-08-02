@@ -1,6 +1,6 @@
 const page = () => {
   return (
-    <div className="p-4">
+    <div className=" py-4 max-w-screen-lg mx-auto">
       <h1 className="text-4xl font-bold text-center">Privacy Policy</h1>
       <p>Last updated: July 28, 2023</p>
       <p>
