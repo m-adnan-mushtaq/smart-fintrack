@@ -1,11 +1,10 @@
 import { Suspense } from "react";
+import Spinner from "./Spinner";
 const LazyLoader = ({ children }: { children: React.ReactNode }) => {
   return (
     <Suspense
       fallback={
-        <div className="flex w-full items-center my-8 justify-center">
-          <span className="loading loading-ring loading-lg"></span>
-        </div>
+        <Spinner/>
       }
     >
       {children}

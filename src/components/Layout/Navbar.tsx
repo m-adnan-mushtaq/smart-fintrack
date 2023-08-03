@@ -1,4 +1,4 @@
-import Link from "next/link";
+import AuthMenu from "../Auth/AuthMenu";
 import Logo from "./Logo";
 import MenuLinks from "./MenuLinks";
 
@@ -39,9 +39,7 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <Link href="/auth" className="btn btn-secondary">
-          Log IN
-        </Link>
+       <AuthMenu childType="navbar" />
       </div>
     </div>
   );

@@ -17,9 +17,7 @@ const Hero = () => {
       <p className="mt-10 text-xl">
         Get Your <span className="font-bold">free account today</span>
       </p>
-      <div className="flex gap-2 pt-4 flex-col md:flex-row items-center  justify-center">
-        <GoogleBtn />
-        <div className="divider lg:divider-horizontal">OR</div>
+      <div className="pt-4">
         <Link
           href="/auth/join"
           className="btn btn-secondary btn-outline md:btn-lg rounded-full"

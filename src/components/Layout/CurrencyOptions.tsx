@@ -1,19 +1,24 @@
+import { currencies } from "@/lib/common/commont";
 import { useMemo, useState } from "react";
-
-const currencies = ["usd", "pkr"];
 
 const CurrencyOptions = () => {
   const [selectedOption, setSelectOptions] = useState<NullableString>();
   const [open, SetOpen] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");
   const clickHandler = (event: React.MouseEvent<HTMLLIElement>) => {
-    const target=event.target as HTMLLIElement
-    setInput(target.innerText)
-    setSelectOptions(target.innerText)
+    event.stopPropagation();
+    const target = event.currentTarget as HTMLLIElement;
+    const symbol = target.querySelector("span.symbol") as HTMLSpanElement;
+    const value=symbol.innerText
+    setInput(value);
+    setSelectOptions(value);
   };
   const filteredList = useMemo(() => {
     const regex = new RegExp(input, "igm");
-    return currencies.filter((currency) => regex.test(currency));
+    // if(!input.length) return currencies
+    return currencies.filter(
+      (currency) => regex.test(currency.name) || regex.test(currency.symbol)
+    );
   }, [input]);
   const inputHandler = ({
     target: { value },
@@ -21,7 +26,7 @@ const CurrencyOptions = () => {
     SetOpen(true);
     setInput(value);
   };
-  
+
   return (
     <div className="relative">
       <label htmlFor="currency" className="label">
@@ -36,16 +41,33 @@ const CurrencyOptions = () => {
         onFocus={() => {
           SetOpen(true);
         }}
-        onBlur={()=>{SetOpen(false)}}
+        onBlur={() => {
+          SetOpen(false);
+        }}
       />
       <ul
         className={`absolute z-10 menu menu-lg ${
-          !open ? "opacity-0 invisible" : "" 
-        } translate-y-2 transition-all s bg-base-200 w-full rounded-box`}
+          !open ? "opacity-0 invisible" : ""
+        } translate-y-2 transition-all s bg-base-100 w-full block rounded-box max-h-[10rem] overflow-y-auto`}
       >
-        {filteredList.map((elm) => (
-          <li className="text-xl cursor-pointer hover:bg-neutral p-1" onClick={clickHandler} key={elm}>{elm}</li>
-        ))}
+        {!filteredList.length ? (
+          <li className="opacity-75">No currencies to show</li>
+        ) : (
+          filteredList.map((elm) => (
+            <li
+              className="text-sm cursor-pointer flex w-full flex-nowrap items-center flex-row hover:bg-neutral p-1"
+              onClick={clickHandler}
+              key={elm.symbol}
+            >
+              <span className="text-sm hover:bg-transparent font-bold symbol">
+                {elm.symbol}
+              </span>
+              <span className="text-sm hover:bg-transparent ms-4 border-opacity-75">
+                {elm.name}
+              </span>
+            </li>
+          ))
+        )}
       </ul>
     </div>
   );

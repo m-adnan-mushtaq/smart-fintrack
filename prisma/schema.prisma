@@ -10,12 +10,13 @@ datasource db {
   url      = env("LOCAL_DATABASE_URL")
 }
 
-model User{
-  id String @id @default(uuid())
-  name String
-  email String @unique
+model User {
+  id       String  @id @default(uuid())
+  name     String
+  email    String  @unique
   password String?
+  googleId String?
   verified Boolean @default(false)
-  picUrl String @default("/media/avatar.svg")
-  currency String @default("usd")
+  picUrl   String  @default("/assets/avatar.svg")
+  currency String  @default("USD")
 }

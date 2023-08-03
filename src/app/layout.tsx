@@ -1,5 +1,8 @@
+import AuthSessionProvider from "@/components/Auth/SessionProvider";
 import "./globals.css";
 import type { Metadata } from "next";
+import { Toaster } from "react-hot-toast";
+import StoreProvider from "@/components/Provider/StoreProvider";
 
 export const metadata: Metadata = {
   title: "Smart FinTrack",
@@ -40,8 +43,8 @@ export const metadata: Metadata = {
     },
   ],
   robots: { index: true, follow: true },
-  category:"Fianance",
-  viewport:{width:"device-width",initialScale:1},
+  category: "Fianance",
+  viewport: { width: "device-width", initialScale: 1 },
   authors: [
     {
       name: "Adnan Mushtaq",
@@ -57,7 +60,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Toaster position="top-center" />
+        <AuthSessionProvider>
+          <StoreProvider>{children}</StoreProvider>
+        </AuthSessionProvider>
+      </body>
     </html>
   );
 }

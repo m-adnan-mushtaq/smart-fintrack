@@ -8,4 +8,7 @@ export interface InputProps{
     changed:(event:React.ChangeEvent<HTMLInputElement>)=>void
   }
   
-  export type InputLabel = Omit<InputProps, "changed" | "value">;
+export type InputLabel = Omit<InputProps, "changed" | "value">;
+export type AuxProps={
+  children:React.ReactNode
+}
