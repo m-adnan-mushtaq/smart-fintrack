@@ -1,6 +1,7 @@
-import AuthMenu from "../Auth/AuthMenu";
+import dynamic from "next/dynamic";
 import Logo from "./Logo";
 import MenuLinks from "./MenuLinks";
+const AuthMenu =dynamic(()=>import("@components/Auth/AuthMenu"),{ssr:false,loading:()=> <span className="loading loading-ring loading-lg"></span>})
 
 
 const Navbar = () => {
@@ -39,7 +40,7 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-       <AuthMenu childType="navbar" />
+        <AuthMenu childType="navbar" />
       </div>
     </div>
   );

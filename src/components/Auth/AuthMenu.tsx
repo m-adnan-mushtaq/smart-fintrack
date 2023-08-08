@@ -4,9 +4,18 @@ import { RootState } from "@/store";
 import Link from "next/link";
 import Image from "next/image";
 import WithRedirectAuth from "../HOC/withRedirectAuth";
+import { signOut } from "next-auth/react";
+import { toast } from "react-hot-toast";
 
 const Menu = () => {
   const { user } = useSelector((state: RootState) => state.auth);
+  const logOutHandler = async () => {
+    try {
+      await signOut({ redirect: false });
+    } catch (error) {
+      toast.error("Something Went Wrong, Try again!")
+    }
+  };
   return user ? (
     <div className="dropdown dropdown-end">
       <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
@@ -32,7 +41,7 @@ const Menu = () => {
           <a>Profile</a>
         </li>
         <li>
-          <a>Logout</a>
+          <button onClick={logOutHandler}>Logout</button>
         </li>
       </ul>
     </div>
@@ -51,4 +60,4 @@ const AuthMenu = () => {
   );
 };
 
-export default WithRedirectAuth(AuthMenu)
+export default WithRedirectAuth(AuthMenu);

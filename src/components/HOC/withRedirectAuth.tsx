@@ -1,36 +1,28 @@
 "use client";
-import { useSession } from "next-auth/react";
-import PublicPageLoader from "@components/Layout/PublicPageLoader";
-import { useDispatch } from "react-redux";
-import { setAuth } from "@/store/slices/auth.slice";
-import { useRouter } from "next/navigation";
-import { UserType } from "@/lib/types";
+import { useSelector } from "react-redux";
+import { redirect } from "next/navigation";
+import { RootState } from "@/store";
+import PublicPageLoader from "../Layout/PublicPageLoader";
 
+interface Props {
+  childType: "navbar" | "page";
+}
 // 👇 REFERNCE FOR HOC IN TYPESCRIPT
 //https://react-typescript-cheatsheet.netlify.app/docs/hoc/full_example/
-type ChildType = "navbar" | "page";
-interface Props {
-  childType: ChildType;
-}
 const WithRedirectAuth =
   <T extends Props = Props>(WrappedComponent: React.ComponentType<T>) =>
   (props: T) => {
-    const {childType} = props
-    const session = useSession();
-    const router = useRouter();
-    const dispatch = useDispatch();
-    if (session.status === "loading") {
-      return childType === "navbar" ? (
-        <span className="loading loading-ring loading-lg"></span>
-      ) : (
-        <PublicPageLoader />
-      );
+    const { user, loading } = useSelector((state: RootState) => state.auth);
+    if (loading) {
+      if (props.childType === "navbar") {
+        return <div className="loading loading-ring loading-lg"></div>;
+      }
+      return <PublicPageLoader />;
     }
-    if (session.status === "authenticated") {
-      dispatch(setAuth(session.data.user as UserType));
-      if (childType === "page") {
-        router.replace("/admin");
-        return null
+    if (user && user.email) {
+      if (props.childType === "page") {
+        const redirectPath = user.verified ? "/admin" : "/auth/verify";
+        redirect(redirectPath);
       }
     }
     return <WrappedComponent {...props} />;

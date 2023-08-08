@@ -1,8 +1,9 @@
+import React from 'react'
 import { currencies } from "@/lib/common/commont";
-import { useMemo, useState } from "react";
+import { CreateUserType } from "@/lib/dto";
+import { SetStateAction, useMemo, useState } from "react";
 
-const CurrencyOptions = () => {
-  const [selectedOption, setSelectOptions] = useState<NullableString>();
+const CurrencyOptions = ({setUser}:{setUser:React.Dispatch<SetStateAction<CreateUserType>>}) => {
   const [open, SetOpen] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");
   const clickHandler = (event: React.MouseEvent<HTMLLIElement>) => {
@@ -11,7 +12,10 @@ const CurrencyOptions = () => {
     const symbol = target.querySelector("span.symbol") as HTMLSpanElement;
     const value=symbol.innerText
     setInput(value);
-    setSelectOptions(value);
+    setUser((prevUser)=>({
+      ...prevUser,
+      currency:value
+    }))
   };
   const filteredList = useMemo(() => {
     const regex = new RegExp(input, "igm");
@@ -25,6 +29,10 @@ const CurrencyOptions = () => {
   }: React.ChangeEvent<HTMLInputElement>) => {
     SetOpen(true);
     setInput(value);
+    setUser((prevUser)=>({
+      ...prevUser,
+      currency:value
+    }))
   };
 
   return (
@@ -73,4 +81,4 @@ const CurrencyOptions = () => {
   );
 };
 
-export default CurrencyOptions;
+export default React.memo(CurrencyOptions);

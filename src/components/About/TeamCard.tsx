@@ -1,14 +1,15 @@
 import Image from "next/image";
 import Title from "../Layout/Title";
+import authorImg from "@/media/author.jpg"
 const TeamCard = () => {
   return (
     <div className="card relative bg-neutral max-w-md mx-auto">
       <div className="avatar mx-auto mt-8 ">
         <div className="w-24 relative rounded-full ring ring-secondary ring-offset-base-100 ring-offset-2">
           <Image
-            loading="lazy"
             alt="Adnan Mushtaq"
-            src="/assets/author.jpg"
+            src={authorImg}
+            placeholder="blur"
             width={100}
             height={100}
           />

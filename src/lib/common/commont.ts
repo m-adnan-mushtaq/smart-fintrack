@@ -1,5 +1,6 @@
 import { InputLabel } from "../types/types";
 
+
 export const features: Feature[] = [
   {
     title: "Budgeting Tools",
@@ -63,10 +64,10 @@ export const logInputs: InputLabel[] = [
 
 export const joinInputs: InputLabel[] = [
   {
-    name: "Name",
+    name: "name",
     type: "text",
     title: "What's your Name?",
-    message: "Use only letters or numbers!",
+    message: "Only letters and spaces are allowed",
     sizes: "w-full max-w-sm",
   },
   ...logInputs,
@@ -136,3 +137,6 @@ export const currenciesEnum = () =>
 currencies.map((currency) => currency.symbol);
 
 export const defaultCurrency:ReturnType<typeof currenciesEnum>[number]="USD"
+export const EMAIL_SERVICE="email_service"
+export const emailRegex=/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+export const OPT_EXIPIRE_TIME=1800 //30 min

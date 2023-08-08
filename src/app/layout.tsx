@@ -1,8 +1,7 @@
-import AuthSessionProvider from "@/components/Auth/SessionProvider";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Toaster } from "react-hot-toast";
-import StoreProvider from "@/components/Provider/StoreProvider";
+import RootProvider from "@/components/Provider/RootProvider";
 
 export const metadata: Metadata = {
   title: "Smart FinTrack",
@@ -61,10 +60,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Toaster position="top-center" />
-        <AuthSessionProvider>
-          <StoreProvider>{children}</StoreProvider>
-        </AuthSessionProvider>
+        <Toaster
+          position="top-center"
+          toastOptions={{ style: { background: "#1a103c", color: "#fff" ,border:"1px solid #58c7f3"} }}
+        />
+        <RootProvider>{children}</RootProvider>
       </body>
     </html>
   );

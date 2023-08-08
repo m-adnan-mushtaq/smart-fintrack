@@ -11,6 +11,12 @@ const nextConfig = {
   experimental: {
     serverActions: true,
   },
+  webpack: (config) => {
+    config.node = {
+      __dirname: true,
+    };
+    return config;
+  },
 };
 
 module.exports = nextConfig;

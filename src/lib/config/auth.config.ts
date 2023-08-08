@@ -1,27 +1,28 @@
 import prismaClient from "@/lib/db/client";
 import { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-export const authConfig: AuthOptions = {
-  secret: process.env.NEXTAUTH_SECRET,
+import { env } from "./env.config";
 
+export const authConfig: AuthOptions = {
+  secret: env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
     maxAge: 86400, //1day
   },
   pages: {
-    signIn: "/login",
+    signIn: "/auth",
+    error: "/auth/error",
   },
   providers: [
     //google login
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
   ],
   callbacks: {
     async signIn({ account, user }) {
       try {
-        await prismaClient.$connect();
         if (account?.provider === "google") {
           //create user in database if not exists
           const userExists = await prismaClient.user.count({
@@ -29,7 +30,7 @@ export const authConfig: AuthOptions = {
           });
           if (userExists) return true;
           //else create new user to database
-           await prismaClient.user.create({
+          await prismaClient.user.create({
             data: {
               picUrl: user.image as string,
               name: user.name!,
@@ -43,14 +44,14 @@ export const authConfig: AuthOptions = {
 
         return true;
       } catch (error) {
-        return false;
+        console.log(error);
+        throw error;
       } finally {
         await prismaClient.$disconnect();
       }
     },
     async session({ session }) {
       try {
-        await prismaClient.$connect();
         const foundUser = await prismaClient.user.findUnique({
           where: { email: session.user?.email as string },
         });
