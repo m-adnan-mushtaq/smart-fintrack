@@ -16,6 +16,10 @@ export const EmailDto = LoginDto.pick({ email: true });
 export const OtpDto = z.object({
   otp: z.string().trim().min(6),
 });
+
+export const MessageDto=JoinDto.pick({email:true,name:true}).merge(z.object({
+  message:z.string().nonempty({message:"Message can't be empty"}).min(20,{message:"message should be 20 characters long!"}).trim()
+}))
 export type CreateUserType = z.infer<typeof JoinDto>;
 
 export const HandleValidationErrors = (error: any) => {

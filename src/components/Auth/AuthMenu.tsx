@@ -18,7 +18,7 @@ const Menu = () => {
   };
   return user ? (
     <div className="dropdown dropdown-end">
-      <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+      <label tabIndex={0} className="btn btn-ghost btn-circle avatar online">
         <div className="w-10 rounded-full">
           <Image
             loading="lazy"
@@ -34,6 +34,10 @@ const Menu = () => {
         tabIndex={0}
         className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
       >
+        <li className="py-2 hover:bg-transparent cursor-auto">
+            <p className="text-lg text-primary">{user.name}</p>
+            <small className="text-sm text-slate-300">{user.email}</small>
+        </li>
         <li>
           <a className="justify-between">Dashboard</a>
         </li>

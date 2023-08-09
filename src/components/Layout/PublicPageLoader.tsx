@@ -3,7 +3,7 @@ import loadingSvg from "@/media/public-loading.svg";
 
 const PublicPageLoader = () => {
   return (
-    <div className="h-screen fixed bg-primary top-0 z-[1000] flex w-screen items-center justify-center">
+    <div className="min-h-screen h-screen fixed bg-primary top-0 z-[1000] flex w-screen items-center justify-center">
       <Image
         src={loadingSvg}
         alt="loading..."

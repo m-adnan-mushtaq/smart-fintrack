@@ -1,6 +1,6 @@
 import { InputLabel } from "../types/types";
 
-
+export const SALT_ROUNDS=10
 export const features: Feature[] = [
   {
     title: "Budgeting Tools",

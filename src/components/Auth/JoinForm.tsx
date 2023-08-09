@@ -90,5 +90,4 @@ const JoinForm = () => {
   );
 };
 
-// export default WithRedirectAuth(JoinForm);
-export default JoinForm;
+export default WithRedirectAuth(JoinForm);

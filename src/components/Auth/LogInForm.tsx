@@ -5,12 +5,19 @@ import { InputLabel } from "@/lib/types/types";
 import FormInput from "@components/Auth/FormInput";
 import GoogleBtn from "./GoogleBtn";
 import Email from "../svg/Email";
+import LoadingButton from "../Layout/LoadingButton";
+import { signIn } from "next-auth/react";
+import { HandleValidationErrors, LoginDto } from "@/lib/dto";
+import { combinedErrorMap } from "@/lib/utils/utils";
+import WithRedirectAuth from "../HOC/withRedirectAuth";
 
 const LogInForm = () => {
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
+  const [loading,setLoading]=useState(false)
+
   //input handler
   const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUser((prevUser) => ({
@@ -18,8 +25,26 @@ const LogInForm = () => {
       [event.target.name]: event.target.value,
     }));
   };
+  //login handler
+  const logInHandler=async ()=>{
+    try {
+      setLoading(true);
+      const validatedUser = await LoginDto.safeParseAsync(user);
+      if (!validatedUser.success) throw combinedErrorMap(validatedUser.error);
+      const result = await signIn("credentials", {
+        email: validatedUser.data.email,
+        password: validatedUser.data.password,
+        redirect: false,
+      });
+      if (result?.error) throw Error("Invalid Credentials, try again!");
+    } catch (error) {
+      HandleValidationErrors(error);
+    } finally {
+      setLoading(false);
+    }
+  }
   return (
-    <form>
+    <div>
       {logInputs.map((input: InputLabel) => (
         <FormInput
           key={input.name}
@@ -29,17 +54,22 @@ const LogInForm = () => {
         />
       ))}
       <div className="text-center">
-        <button type="submit" className="btn btn-secondary btn-outline md:btn-md rounded-full">
+        <LoadingButton
+          clicked={logInHandler}
+          loading={loading}
+          style="btn-outline md:btn-md rounded-full"
+          type="secondary"
+        >
           <Email />
           Continue to login
-        </button>
+        </LoadingButton>
       </div>
       <div className="divider">OR</div>
       <div className="text-center">
         <GoogleBtn size="md" />
       </div>
-    </form>
+    </div>
   );
 };
 
-export default LogInForm;
+export default WithRedirectAuth(LogInForm)

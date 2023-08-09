@@ -18,11 +18,12 @@ export interface AuthResponse {
   message:string
 }
 
-export enum QUEUE_NAMES{
+export const enum QUEUE_NAMES{
   emailQueue="EMAIL_QUEUE"
 }
-export enum JOB_NAMES{
+export const enum JOB_NAMES{
   verifyEmail="VERIFY_EMAIL",
   welcomeUser="WELCOME_EMAIL",
+  supportEmail="SUPPORT_EMAIL"
 }
 

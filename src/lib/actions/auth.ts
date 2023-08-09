@@ -4,11 +4,11 @@ import { CreateUserType } from "../dto";
 import { AuthResponse, JOB_NAMES } from "../types/types";
 import { otpService, redis } from "../services";
 import { emailQueue } from "../services/jobs.service";
+import { Prisma } from "@prisma/client";
+
 export async function createUser(user: CreateUserType): Promise<AuthResponse> {
   try {
-    await prismaClient.user.create({
-      data: user,
-    });
+    await prismaClient.user.signup(user);
     const { success, message } = await sendVerificationEmail(user.email);
     if (!success) throw Error(message);
     return {
@@ -17,6 +17,10 @@ export async function createUser(user: CreateUserType): Promise<AuthResponse> {
     };
   } catch (error) {
     console.log(error);
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      console.log(error.code);
+      if (error.code === "P2002") error = Error("Email is already taken!");
+    }
     return { success: false, message: (error as Error).message };
   } finally {
     await prismaClient.$disconnect();
@@ -44,7 +48,7 @@ export async function sendVerificationEmail(
   email: string
 ): Promise<AuthResponse> {
   try {
-    await emailQueue.addJob(JOB_NAMES.verifyEmail,{email})
+    await emailQueue.addJob(JOB_NAMES.verifyEmail, { email });
     return {
       success: true,
       message: "Verification Email has been sent",
@@ -80,5 +84,15 @@ export async function verifyOtp(
       success: false,
       message: (error as Error).message,
     };
+  }
+}
+export async function sendSupportEmail(data: GenericObject) {
+  try {
+    await emailQueue.addJob(JOB_NAMES.supportEmail, data, {
+      delay: 5000,
+      attempts: 1,
+    });
+  } catch (error) {
+    throw Error("Failed to send messsage");
   }
 }

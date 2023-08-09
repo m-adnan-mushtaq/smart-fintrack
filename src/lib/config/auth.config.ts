@@ -1,6 +1,7 @@
 import prismaClient from "@/lib/db/client";
 import { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { env } from "./env.config";
 
 export const authConfig: AuthOptions = {
@@ -14,6 +15,34 @@ export const authConfig: AuthOptions = {
     error: "/auth/error",
   },
   providers: [
+    //credentials login
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: { type: "email" },
+        password: { type: "password" },
+      },
+      async authorize(credentials, req) {
+        // Add logic here to look up the user from the credentials supplied
+        try {
+          const userFound = await prismaClient.user.findUnique({
+            where: { email: credentials?.email },
+          });
+          if (!userFound || !userFound.password)
+            throw Error("Invalid Credentials!");
+          const isMatchedPassword = await prismaClient.user.comparePassword(
+            credentials?.password as string,
+            userFound.password
+          );
+          if (!isMatchedPassword) throw Error("Invalid Credentials");
+          return userFound;
+        } catch (error) {
+          throw error;
+        }finally{
+          await prismaClient.$disconnect()
+        }
+      },
+    }),
     //google login
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
@@ -56,9 +85,10 @@ export const authConfig: AuthOptions = {
           where: { email: session.user?.email as string },
         });
         if (!foundUser) throw Error("No user found!");
+        const { password, ...rest } = foundUser;
         return {
           ...session,
-          user: foundUser,
+          user: rest,
         };
       } catch (error) {
         throw error;

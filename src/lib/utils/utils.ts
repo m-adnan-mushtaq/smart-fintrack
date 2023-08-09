@@ -1,3 +1,5 @@
+import * as bcrypt from "bcrypt"
+
 /***********************************/
 /* FILE CONTAINS HELPER FUNCTION*/
 /***********************************/
@@ -20,6 +22,7 @@ const combinedErrorMap = (error: ZodError) => {
   });
   return new ValidationErrors(errors);
 };
+
 
 export {
     ValidationErrors,

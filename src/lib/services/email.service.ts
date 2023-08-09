@@ -4,11 +4,12 @@ import { transporter } from "../config";
 
 class EmailService {
   constructor() {}
-  static async sendVerificationEmail(job:Job) {
+  static async sendVerificationEmail(job: Job) {
     try {
-      const {email}=job.data
+      const { email } = job.data;
+      return
       const otpCode = await otpService.generateOtop(email);
-      
+
       await transporter.sendMail({
         from: "noreplay, smartfintrack@support.com",
         to: email,
@@ -58,8 +59,28 @@ class EmailService {
       throw Error("Failed to send email!");
     }
   }
+
+  static async sendSupportMail(job: Job) {
+    try {
+      const { email, message, name } = job.data;
+      console.log(job.data);
+      
+      await transporter.sendMail({
+        from: "noreplay, smartfintrack@support.com",
+        to: "malikkingoo68@gmail.com",
+        subject: "Support Required from client!",
+        html: `
+        <h1>Message from ${name}</h1>
+        <p>Email : ${email}</p>
+        <h5>
+        Message : ${message}
+        </h5>
+        `,
+      });
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
-export {
-  EmailService
-}
+export { EmailService };
