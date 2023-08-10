@@ -3,7 +3,13 @@ import TeamCard from "@/components/About/TeamCard";
 import LazyLoader from "@/components/Layout/LazyLoader";
 import Line from "@/components/Layout/Line";
 import Title from "@/components/Layout/Title";
+import { SITE_TITLE } from "@/lib/common/commont";
+import { Metadata } from "next";
 import Image from "next/image";
+
+export const metadata:Metadata={
+  title:SITE_TITLE+"About Us"
+}
 
 const AboutPage = () => {
   return (

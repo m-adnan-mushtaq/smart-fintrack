@@ -5,11 +5,12 @@ interface BtnProps extends AuxProps {
   style?:string,
   clicked: () => void;
   loading: boolean;
+  btnType?:"button"|"submit"|"reset"
 }
 
-const LoadingButton = ({ type,style, loading, clicked, children }: BtnProps) => {
+const LoadingButton = ({btnType, type,style, loading, clicked, children }: BtnProps) => {
   return (
-    <button onClick={clicked} disabled={loading} className={`btn btn-${type} ${style}`}>
+    <button type={btnType ?? "button"} onClick={clicked} disabled={loading} className={`btn btn-${type} ${style}`}>
       {loading ? (
         <>
           <span className="loading loading-spinner"></span>

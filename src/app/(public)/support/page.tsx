@@ -1,7 +1,8 @@
 import Title from "@/components/Layout/Title";
 import SupportFrom from "@/components/Support/Form";
 import Wave from "@/components/svg/WaveSvg";
-import { sendSupportEmail } from "@/lib/actions";
+import { SITE_TITLE } from "@/lib/common/commont";
+import { Metadata } from "next";
 
 const supportInfo = [
   {
@@ -49,6 +50,10 @@ const supportInfo = [
     ),
   },
 ];
+
+export const metadata:Metadata={
+  title:SITE_TITLE+"Reach Us"
+}
 
 const SupportPage = () => {
   return (

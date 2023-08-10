@@ -1,2 +1,3 @@
 User-agent: *
 Disallow: /admin/*
+Sitemap: https://smart-fintrack.vercel.app/sitemap.xml
