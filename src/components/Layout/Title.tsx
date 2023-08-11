@@ -12,6 +12,7 @@ function returnSizeHelper(type:TitleType){
             fontSize="2xl md:text-3xl"
             break;
         default:
+            fontSize="2xl md:text-3xl"
             break;
     }
     return fontSize

@@ -8,8 +8,8 @@ const RootProvider = ({ children }: AuxProps) => {
   return (
     <SessionProvider>
       <StoreProvider>
-        <AuthSessionProvider>
-          {children}
+          <AuthSessionProvider>
+            {children}
           </AuthSessionProvider>
       </StoreProvider>
     </SessionProvider>

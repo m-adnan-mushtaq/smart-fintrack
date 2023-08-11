@@ -1,5 +1,4 @@
 import Email from "@svg/Email";
-import GoogleBtn from "../Auth/GoogleBtn";
 import Link from "next/link";
 
 const Hero = () => {

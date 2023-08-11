@@ -8,13 +8,13 @@ import Email from "@components/svg/Email";
 import CurrencyOptions from "../Layout/CurrencyOptions";
 import { createUser } from "@/lib/actions";
 import { CreateUserType, HandleValidationErrors, JoinDto } from "@/lib/dto";
-import WithRedirectAuth from "../HOC/withRedirectAuth";
 import { combinedErrorMap } from "@/lib/utils/utils";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import LoadingButton from "../Layout/LoadingButton";
 import { useDispatch } from "react-redux";
 import { setVerifyEmail } from "@/store/slices/auth.slice";
+import WithRedirectAuth from "../HOC/withRedirectAuth";
 
 const Form = () => {
   const router = useRouter();

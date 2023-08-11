@@ -39,7 +39,7 @@ const Menu = () => {
             <small className="text-sm text-slate-300">{user.email}</small>
         </li>
         <li>
-          <a className="justify-between">Dashboard</a>
+          <Link href="/admin" className="justify-between">Dashboard</Link>
         </li>
         <li>
           <a>Profile</a>

@@ -5,6 +5,10 @@ import { AuthResponse, JOB_NAMES } from "../types/types";
 import { otpService, redis } from "../services";
 import { emailQueue } from "../services/jobs.service";
 import { Prisma } from "@prisma/client";
+import { UserType } from "../types";
+import { store } from "@/store";
+import { setAuth } from "@/store/slices/auth.slice";
+
 
 export async function createUser(user: CreateUserType): Promise<AuthResponse> {
   try {
@@ -84,6 +88,8 @@ export async function verifyOtp(
       success: false,
       message: (error as Error).message,
     };
+  }finally{
+    await prismaClient.$disconnect()
   }
 }
 export async function sendSupportEmail(data: GenericObject) {
@@ -95,4 +101,10 @@ export async function sendSupportEmail(data: GenericObject) {
   } catch (error) {
     throw Error("Failed to send messsage");
   }
+}
+ 
+export async function updateUserState(user:UserType) {
+    store.dispatch(setAuth(user))
+    console.log("state sever side updated!",user.email);
+    return Promise.resolve()
 }
