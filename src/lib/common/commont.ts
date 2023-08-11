@@ -48,6 +48,12 @@ export const menuLinks: MenuLink[] = [
   },
 ];
 
+export const adminLinks:MenuLink[]=[
+  {
+    label:"Dashboard",
+    path:"/admin/"
+  }
+]
 export const logInputs: InputLabel[] = [
   {
     name: "email",
