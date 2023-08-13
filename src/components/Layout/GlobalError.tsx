@@ -6,14 +6,14 @@ const GlobalError = ({ error, reset }: { error: Error; reset: () => void }) => {
   return (
     <div className="h-screen flex items-center justify-center px-4">
       <div className="flex items-center gap-4 flex-col max-w-screen-md">
-        <Title color="red-500" type="level1">
+        <h1 className="text-red-400 text-9xl font-extrabold">
           500
-        </Title>
+        </h1>
         <div className="bg-neutral p-8 rounded capitalize">
-          <Title color="red-400" type="level5">
+          <h5 className="text-red-500 font-semibold">
             Sorry, something went wrong on our end. We are currently trying to
             fix the problem.
-          </Title>
+          </h5>
           <div tabIndex={0} className="collapse  border-primary border my-4">
             <div className="collapse-title text-xl font-medium">
               Click to see error details

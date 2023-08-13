@@ -46,7 +46,7 @@ const AboutPage = () => {
               alt="smartfintrack"
               src="/assets/finance.svg"
               loading="lazy"
-              className="mx-auto md:ms-auto"
+              className="mx-auto w-auto h-auto md:ms-auto"
               width={400}
               height={400}
             />
@@ -58,7 +58,7 @@ const AboutPage = () => {
               alt="smartfintrack"
               src="/assets/vision.svg"
               loading="lazy"
-              className="mx-auto md:ms-auto"
+              className="mx-auto w-auto h-auto md:ms-auto"
               width={400}
               height={400}
             />

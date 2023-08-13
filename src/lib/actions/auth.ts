@@ -7,7 +7,7 @@ import { emailQueue } from "../services/jobs.service";
 import { Prisma } from "@prisma/client";
 import { UserType } from "../types";
 import { store } from "@/store";
-import { setAuth } from "@/store/slices/auth.slice";
+import { resetAuth, setAuth } from "@/store/slices/auth.slice";
 
 
 export async function createUser(user: CreateUserType): Promise<AuthResponse> {
@@ -107,4 +107,9 @@ export async function updateUserState(user:UserType) {
     store.dispatch(setAuth(user))
     console.log("state sever side updated!",user.email);
     return Promise.resolve()
+}
+
+export async function logOut(){
+  store.dispatch(resetAuth())
+
 }

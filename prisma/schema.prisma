@@ -25,6 +25,7 @@ model User {
   expenses    Expense[]
   savingGoals SavingGoal[]
   Budget      Budget?
+  createdAt DateTime @default(now())
 
   @@index([name], type: Hash)
 }

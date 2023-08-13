@@ -1,12 +1,11 @@
-import dynamic from "next/dynamic";
+import NavMenu from "../Auth/NavMenu";
 import Logo from "./Logo";
 import MenuLinks from "./MenuLinks";
-const AuthMenu =dynamic(()=>import("@components/Auth/AuthMenu"),{ssr:false,loading:()=> <span className="loading loading-ring loading-lg"></span>})
 
 
 const Navbar = () => {
   return (
-    <div className="navbar bg-base-100 shadow-lg px-4">
+    <nav className="navbar bg-base-100 shadow-lg px-4">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -40,9 +39,9 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <AuthMenu childType="navbar" />
+        <NavMenu  />
       </div>
-    </div>
+    </nav>
   );
 };
 

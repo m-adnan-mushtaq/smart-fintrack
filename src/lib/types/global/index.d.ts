@@ -16,7 +16,8 @@ declare interface MenuLink {
 
 declare type NullableString = string | undefined;
 declare type TitleType = "level1" | "level2" | "level3" | "level4" | "level5";
-declare type ColorType = "primary" | "secondary" | "accent" | "success" | "error"|string;
+declare type ColorType = "primary" | "secondary" | "accent" | "success" | "error";
+declare type Position = "top" | "end" | "start" | "down"
 declare interface TilteProps {
   type: TitleType;
   color: ColorType;
