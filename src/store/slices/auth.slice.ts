@@ -3,13 +3,13 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 export interface AuthState {
   user: UserType | null;
   loading: boolean;
-  verifyEmail:string
+  verifyEmail: string;
 }
 
 const initialState: AuthState = {
   user: null,
   loading: false,
-  verifyEmail:"",
+  verifyEmail: "",
 };
 
 export const authSlice = createSlice({
@@ -34,6 +34,7 @@ export const authSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { resetAuth, setAuth,setAuthLoading,setVerifyEmail } = authSlice.actions;
+export const { resetAuth, setAuth, setAuthLoading, setVerifyEmail } =
+  authSlice.actions;
 const authReducer = authSlice.reducer;
 export default authReducer;

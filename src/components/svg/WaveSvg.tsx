@@ -1,4 +1,6 @@
-function Wave() {
+type Color="#37bcf1"|"#e779c1"|"#f1c40e"
+
+function Wave({color}:{color:Color}) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -10,7 +12,7 @@ function Wave() {
       <defs>
         <linearGradient id="sw-gradient-0" x1="0" x2="0" y1="1" y2="0">
           <stop offset="0%" stopColor="#1a103c"></stop>
-          <stop offset="100%" stopColor="rgba(88, 199, 243, 1)"></stop>
+          <stop offset="100%" stopColor={color}></stop>
         </linearGradient>
       </defs>
       <path

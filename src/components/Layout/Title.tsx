@@ -11,7 +11,10 @@ function returnSizeHelper(type:TitleType){
         case "level3":
             fontSize="2xl md:text-3xl"
             break;
+        case "level4":   
+        case "level5":   
         default:
+            fontSize="xl md:text-2xl"
             break;
     }
     return fontSize
@@ -22,7 +25,7 @@ interface Props extends TilteProps{
 }
 const Title = (props:Props) => {
   return (
-    <h1 className={` capitalize font-semibold  text-${props.color} ${props.styles} text-${returnSizeHelper(props.type)}`}>
+    <h1 className={` capitalize font-semibold  text-${props.color} ${props.styles??""} text-${returnSizeHelper(props.type)}`}>
         {props.children}
     </h1>
   )

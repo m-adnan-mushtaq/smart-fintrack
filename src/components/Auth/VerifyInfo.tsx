@@ -4,7 +4,7 @@ const VerifyInfo = () => {
   return (
     <div className="flex mt-2 flex-row items-center justify-center capitalize">
             <p >Verify accout Help</p>
-            <div className="dropdown dropdown-end">
+            <div className="dropdown dropdown-top dropdown-end">
               <label
                 tabIndex={0}
                 className="btn btn-circle btn-ghost btn-xs text-info"
@@ -28,7 +28,7 @@ const VerifyInfo = () => {
                 className="card compact dropdown-content z-[1] shadow bg-base-100 rounded-box w-64"
               >
                 <div className="card-body">
-                  <Link href="/auth/verify" prefetch={false} className="link link-primary link-hover">Go to verification page!</Link>
+                  <Link href="/auth/verify" prefetch={false} className="link text-xl link-primary link-hover">Verify My account</Link>
                   <p className="text-sm">created account,but not verified yet!</p>
                 </div>
               </div>

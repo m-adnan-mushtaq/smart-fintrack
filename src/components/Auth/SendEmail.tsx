@@ -1,9 +1,13 @@
 "use client";
-import { useRef, useTransition } from "react";
+import { ElementRef, useRef, useTransition } from "react";
 import Modal from "../Layout/Modal";
 import LoadingButton from "../Layout/LoadingButton";
 import { toast } from "react-hot-toast";
-import { sendVerificationEmail, verifyOtp } from "@/lib/actions";
+import {
+  checkEmailExists,
+  sendVerificationEmail,
+  verifyOtp,
+} from "@/lib/actions";
 import { EmailDto, OtpDto } from "@/lib/dto";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
@@ -11,11 +15,11 @@ import { RootState } from "@/store";
 
 const modalId = "verify_modal";
 const SendEmail = () => {
-  const closeRef = useRef<HTMLButtonElement>(null);
+  const modalRef = useRef<ElementRef<"dialog">>(null);
   const otpRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
-  const router=useRouter()
-  const {verifyEmail}=useSelector((state:RootState)=>state.auth)
+  const router = useRouter();
+  const { verifyEmail } = useSelector((state: RootState) => state.auth);
   const [isPending, startTransition] = useTransition();
   const verifyOtPHandler = () => {
     startTransition(async () => {
@@ -23,7 +27,7 @@ const SendEmail = () => {
         const otp = otpRef.current?.value;
         const parsed = OtpDto.safeParse({ otp });
         if (!parsed.success) throw Error("Otp must be 6 characters long!");
-        const { message } = await verifyOtp(verifyEmail,parsed.data.otp);
+        const { message } = await verifyOtp(verifyEmail, parsed.data.otp);
         toast.success(message);
         router.replace("/auth");
       } catch (error) {
@@ -40,17 +44,19 @@ const SendEmail = () => {
         const email = emailRef.current?.value;
         const parsedData = EmailDto.safeParse({ email });
         if (!parsedData.success) throw Error("Invalid Email Address!");
+        const { success } = await checkEmailExists(parsedData.data.email);
+        if (!success) throw Error("Email is not registered yet!");
         await sendVerificationEmail(parsedData.data.email)
-        toast.success("Email has been sent")
-        closeRef.current?.click()
-
+        toast.success("Email has been sent");
+        if (emailRef.current) {
+          emailRef.current.value = "";
+        }
+        modalRef.current?.close()
       } catch (error) {
         if (error instanceof Error) {
           toast.error(error.message);
         }
-      } finally {
-        closeRef.current?.click();
-      }
+      } 
     });
   };
   return (
@@ -76,7 +82,7 @@ const SendEmail = () => {
         didn't recevied a code?&nbsp;
         <button
           className="link link-hover link-secondary font-semibold uppercase"
-          onClick={() => (window as any).verify_modal.showModal()}
+          onClick={() => modalRef.current?.showModal()}
         >
           resend email
         </button>
@@ -86,11 +92,12 @@ const SendEmail = () => {
         btnLabel="send email"
         id={modalId}
         clicked={resendEmailHandler}
-        ref={closeRef}
+        ref={modalRef}
         loading={isPending}
       >
         <input
           type="email"
+          ref={emailRef}
           placeholder="Type here email"
           className="input input-bordered input-secondary w-full max-w-xs"
         />

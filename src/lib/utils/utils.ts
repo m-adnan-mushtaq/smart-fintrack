@@ -1,9 +1,7 @@
-import * as bcrypt from "bcrypt"
-
+import { ZodError } from "zod";
 /***********************************/
 /* FILE CONTAINS HELPER FUNCTION*/
 /***********************************/
-import { ZodError } from "zod";
 
 class ValidationErrors extends Error {
   constructor(public errors: string[]) {
@@ -22,6 +20,7 @@ const combinedErrorMap = (error: ZodError) => {
   });
   return new ValidationErrors(errors);
 };
+
 
 
 export {

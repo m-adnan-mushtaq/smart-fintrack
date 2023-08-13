@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -11,12 +12,95 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(uuid())
-  name     String
-  email    String  @unique
-  password String?
-  googleId String?
-  verified Boolean @default(false)
-  picUrl   String  @default("/assets/avatar.svg")
-  currency String  @default("USD")
+  id          String       @id @default(uuid())
+  name        String       @db.VarChar(50)
+  email       String       @unique
+  password    String?
+  googleId    String?      @db.VarChar(50)
+  verified    Boolean      @default(false)
+  picUrl      String       @default("/assets/avatar.svg")
+  currency    String       @default("USD") @db.VarChar(10)
+  productTour Json?
+  incomes     Income[]
+  expenses    Expense[]
+  savingGoals SavingGoal[]
+  Budget      Budget?
+  createdAt DateTime @default(now())
+
+  @@index([name], type: Hash)
+}
+
+model Budget {
+  id          String       @id @default(uuid())
+  type        BudgetType   @default(PERSONAL)
+  User        User         @relation(fields: [userId], references: [id])
+  userId      String       @unique()
+  incomes     Income[]
+  expenses    Expense[]
+  savingGoals SavingGoal[]
+}
+
+model Income {
+  id        String   @id @default(uuid())
+  source    String   @db.VarChar(100)
+  amount    Int
+  User      User     @relation(fields: [userId], references: [id])
+  userId    String
+  Budget    Budget   @relation(fields: [budgetId], references: [id])
+  budgetId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([updatedAt(sort: Desc)])
+  @@index([amount(sort: Desc)])
+  @@index([source], type: Hash)
+}
+
+model SavingGoal {
+  id          String   @id @default(uuid())
+  target      String   @db.VarChar(100)
+  description String?  @db.VarChar(200)
+  amount      Int
+  User        User     @relation(fields: [userId], references: [id])
+  userId      String
+  Budget      Budget   @relation(fields: [budgetId], references: [id])
+  budgetId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([updatedAt(sort: Desc)])
+  @@index([amount(sort: Desc)])
+  @@index([target], type: Hash)
+}
+
+model Expense {
+  id          String     @id @default(uuid())
+  title       String     @db.VarChar(100)
+  description String?    @db.VarChar(200)
+  category    ExpenseCat @default(VAIRABLE)
+  amount      Int
+  User        User       @relation(fields: [userId], references: [id])
+  userId      String
+  Budget      Budget     @relation(fields: [budgetId], references: [id])
+  budgetId    String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([updatedAt(sort: Desc)])
+  @@index([amount])
+  @@index([category], type: Hash)
+  @@index([title], type: Hash)
+}
+
+enum BudgetType {
+  STUDENT
+  PERSONAL
+  FAMILY
+}
+
+enum ExpenseCat {
+  FIXED
+  VAIRABLE
+  BILL
+  FUN
 }

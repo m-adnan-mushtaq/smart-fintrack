@@ -9,7 +9,6 @@ import LoadingButton from "../Layout/LoadingButton";
 import { signIn } from "next-auth/react";
 import { HandleValidationErrors, LoginDto } from "@/lib/dto";
 import { combinedErrorMap } from "@/lib/utils/utils";
-import WithRedirectAuth from "../HOC/withRedirectAuth";
 
 const LogInForm = () => {
   const [user, setUser] = useState({
@@ -72,4 +71,4 @@ const LogInForm = () => {
   );
 };
 
-export default WithRedirectAuth(LogInForm)
+export default LogInForm

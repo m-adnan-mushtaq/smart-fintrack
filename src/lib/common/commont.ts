@@ -1,5 +1,6 @@
 import { InputLabel } from "../types/types";
 
+export const SITE_TITLE="Smart Fintrack - "
 export const SALT_ROUNDS=10
 export const features: Feature[] = [
   {
@@ -47,6 +48,12 @@ export const menuLinks: MenuLink[] = [
   },
 ];
 
+export const adminLinks:MenuLink[]=[
+  {
+    label:"Dashboard",
+    path:"/admin/"
+  }
+]
 export const logInputs: InputLabel[] = [
   {
     name: "email",

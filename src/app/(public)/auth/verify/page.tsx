@@ -1,5 +1,11 @@
 import SendEmail from "@/components/Auth/SendEmail";
 import Title from "@/components/Layout/Title";
+import { SITE_TITLE } from "@/lib/common/commont";
+import { Metadata } from "next";
+
+export const metadata:Metadata={
+  title:SITE_TITLE+"Verify Your Account"
+}
 
 const page = () => {
   return (

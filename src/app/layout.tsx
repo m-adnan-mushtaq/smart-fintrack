@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Toaster } from "react-hot-toast";
 import RootProvider from "@/components/Provider/RootProvider";
+import Test from "@/components/Provider/ServerAuth";
 
 export const metadata: Metadata = {
   title: "Smart FinTrack",
@@ -62,9 +63,17 @@ export default function RootLayout({
       <body>
         <Toaster
           position="top-center"
-          toastOptions={{ style: { background: "#1a103c", color: "#fff" ,border:"1px solid #58c7f3"} }}
+          toastOptions={{
+            style: {
+              background: "#1a103c",
+              color: "#fff",
+              border: "1px solid #58c7f3",
+            },
+          }}
         />
-        <RootProvider>{children}</RootProvider>
+        <RootProvider>
+          {children}
+          </RootProvider>
       </body>
     </html>
   );

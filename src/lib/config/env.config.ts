@@ -11,7 +11,8 @@ const env = cleanEnv(process.env, {
   REDIS_LCOAL_HOST: str(),
   REDIS_LOCAL_PORT: port(),
   EMAIL_ADDRESS:email(),
-  EMAIL_PASSWORD:str()
+  EMAIL_PASSWORD:str(),
+  NEXT_PUBLIC_GOOGLE_CLIENT_ID:str()
 });
 
 
