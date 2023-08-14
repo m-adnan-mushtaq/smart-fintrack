@@ -8,7 +8,7 @@
 </div>
 </center>
 
-## gonna be the best resume personal proejct, stay tuned for more updates
+## gonna be the best resume personal project,
 SmartFinTrack is a finance management website built using Next.js, PostgresSQL, Prisma, Tailwind CSS, and NextAuth.js for authentication. The application aims to help users manage their finances effectively by providing budgeting tools, income tracking, expense tracking, savings goals, bill reminders, and more.
 
 ## Features
