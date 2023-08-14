@@ -53,6 +53,10 @@ const CurrencyOptions = ({setUser}:{setUser:React.Dispatch<SetStateAction<Create
           SetOpen(false);
         }}
       />
+      <label className="label">
+    <span className="label-text-alt"></span>
+    <span className="label-text-alt">Select one of supported currencies</span>
+  </label>
       <ul
         className={`absolute z-10 menu menu-lg ${
           !open ? "opacity-0 invisible" : ""

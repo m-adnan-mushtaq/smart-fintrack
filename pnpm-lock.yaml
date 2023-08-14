@@ -41,6 +41,12 @@ dependencies:
   eslint-config-next:
     specifier: 13.4.12
     version: 13.4.12(eslint@8.45.0)(typescript@5.1.6)
+  intro.js:
+    specifier: ^7.1.0
+    version: 7.1.0
+  intro.js-react:
+    specifier: ^1.0.0
+    version: 1.0.0(intro.js@7.1.0)(react@18.2.0)
   ioredis:
     specifier: ^5.3.2
     version: 5.3.2
@@ -1869,6 +1875,20 @@ packages:
       get-intrinsic: 1.2.1
       has: 1.0.3
       side-channel: 1.0.4
+    dev: false
+
+  /intro.js-react@1.0.0(intro.js@7.1.0)(react@18.2.0):
+    resolution: {integrity: sha512-zR8pbTyX20RnCZpJMc0nuHBpsjcr1wFkj3ZookV6Ly4eE/LGpFTQwPsaA61Cryzwiy/tTFsusf4hPU9NpI9UOg==}
+    peerDependencies:
+      intro.js: '>=2.5.0'
+      react: '>=0.14.0'
+    dependencies:
+      intro.js: 7.1.0
+      react: 18.2.0
+    dev: false
+
+  /intro.js@7.1.0:
+    resolution: {integrity: sha512-RH6/XXIgDLITQNWQ4HOe0AJaZHkwCp7ltYSAYyUs8LgAR8D97SYoss3qDhqDXqa2/29uPTY1g5S1FJN6ZV9e/Q==}
     dev: false
 
   /ioredis@5.3.2:

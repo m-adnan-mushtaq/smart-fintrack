@@ -37,10 +37,10 @@ const AuthMenu = ({size, position }: MenuProps) => {
         tabIndex={0}
         className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
       >
-        <li className="py-2 hover:bg-transparent cursor-auto">
-          <p className="text-lg text-primary">{user.name}</p>
+        <div className="p-2 hover:bg-transparent cursor-auto">
+          <p className="text-lg text-primary capitalize">{user.name}</p>
           <small className="text-sm text-slate-300">{user.email}</small>
-        </li>
+        </div>
         <li>
           <Link href="/admin" className="justify-between">
             Dashboard
