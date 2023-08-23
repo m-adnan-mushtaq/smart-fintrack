@@ -1,16 +1,16 @@
 "use server";
 import prismaClient from "@/lib/db/client";
 import { CreateUserType } from "../dto";
-import { AuthResponse, JOB_NAMES } from "../types/types";
-import { otpService, redis } from "../services";
+import { ActionResponse, JOB_NAMES } from "../types/types";
+import { otpService,  redis} from "../services";
 import { emailQueue } from "../services/jobs.service";
 import { Prisma } from "@prisma/client";
-import { UserType } from "../types";
+import { DbUser } from "../types";
 import { store } from "@/store";
 import { resetAuth, setAuth } from "@/store/slices/auth.slice";
 
 
-export async function createUser(user: CreateUserType): Promise<AuthResponse> {
+export async function createUser(user: CreateUserType): Promise<ActionResponse> {
   try {
     await prismaClient.user.signup(user);
     const { success, message } = await sendVerificationEmail(user.email);
@@ -26,12 +26,10 @@ export async function createUser(user: CreateUserType): Promise<AuthResponse> {
       if (error.code === "P2002") error = Error("Email is already taken!");
     }
     return { success: false, message: (error as Error).message };
-  } finally {
-    await prismaClient.$disconnect();
   }
 }
 
-export async function checkEmailExists(email: string): Promise<AuthResponse> {
+export async function checkEmailExists(email: string): Promise<ActionResponse> {
   try {
     const isUserExists = await prismaClient.user.findUnique({
       where: { email },
@@ -43,14 +41,12 @@ export async function checkEmailExists(email: string): Promise<AuthResponse> {
     };
   } catch (error) {
     return { success: false, message: (error as Error).message };
-  } finally {
-    await prismaClient.$disconnect();
-  }
+  } 
 }
 
 export async function sendVerificationEmail(
   email: string
-): Promise<AuthResponse> {
+): Promise<ActionResponse> {
   try {
     await emailQueue.addJob(JOB_NAMES.verifyEmail, { email });
     return {
@@ -68,7 +64,7 @@ export async function sendVerificationEmail(
 export async function verifyOtp(
   emaiL: string,
   otp: string
-): Promise<AuthResponse> {
+): Promise<ActionResponse> {
   try {
     if (!emaiL || !otp) throw Error("Invalid credentials");
     await otpService.verifyOtp(emaiL, otp);
@@ -88,8 +84,6 @@ export async function verifyOtp(
       success: false,
       message: (error as Error).message,
     };
-  }finally{
-    await prismaClient.$disconnect()
   }
 }
 export async function sendSupportEmail(data: GenericObject) {
@@ -103,7 +97,7 @@ export async function sendSupportEmail(data: GenericObject) {
   }
 }
  
-export async function updateUserState(user:UserType) {
+export async function updateUserState(user:DbUser) {
     store.dispatch(setAuth(user))
     console.log("state sever side updated!",user.email);
     return Promise.resolve()

@@ -13,17 +13,26 @@ export type AuxProps = {
   children: React.ReactNode;
 };
 
-export interface AuthResponse {
+export interface ActionResponse {
   success: boolean;
-  message:string
+  message: string;
+}
+export interface MutationResponse<T> {
+  success: boolean;
+  payload: T
 }
 
-export const enum QUEUE_NAMES{
-  emailQueue="EMAIL_QUEUE"
+export const enum QUEUE_NAMES {
+  emailQueue = "EMAIL_QUEUE",
 }
-export const enum JOB_NAMES{
-  verifyEmail="VERIFY_EMAIL",
-  welcomeUser="WELCOME_EMAIL",
-  supportEmail="SUPPORT_EMAIL"
+export const enum JOB_NAMES {
+  verifyEmail = "VERIFY_EMAIL",
+  welcomeUser = "WELCOME_EMAIL",
+  supportEmail = "SUPPORT_EMAIL",
+}
+
+export type SUPPORTED_TAGS="TOUR"
+export interface FetchOptions extends NextFetchRequestConfig {
+  tags: SUPPORTED_TAGS[]
 }
 

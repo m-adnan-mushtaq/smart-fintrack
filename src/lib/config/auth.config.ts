@@ -38,8 +38,6 @@ export const authConfig: AuthOptions = {
           return userFound;
         } catch (error) {
           throw error;
-        }finally{
-          await prismaClient.$disconnect()
         }
       },
     }),
@@ -75,9 +73,7 @@ export const authConfig: AuthOptions = {
       } catch (error) {
         console.log(error);
         throw error;
-      } finally {
-        await prismaClient.$disconnect();
-      }
+      } 
     },
     async session({ session }) {
       try {
@@ -92,8 +88,6 @@ export const authConfig: AuthOptions = {
         };
       } catch (error) {
         throw error;
-      } finally {
-        await prismaClient.$disconnect();
       }
     },
   },

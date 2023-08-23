@@ -1,5 +1,5 @@
 "use client"
-import { UserType } from "@/lib/types";
+import { DbUser } from "@/lib/types";
 import { AuxProps } from "@/lib/types/types";
 import { resetAuth, setAuth, setAuthLoading } from "@/store/slices/auth.slice";
 import { useSession } from "next-auth/react";
@@ -12,7 +12,7 @@ const AuthSessionProvider = ({children }: AuxProps) => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (status === "authenticated") {
-      dispatch(setAuth(data.user as UserType));
+      dispatch(setAuth(data.user as DbUser));
       return;
     }
     if (status === "unauthenticated") {

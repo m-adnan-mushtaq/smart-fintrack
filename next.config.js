@@ -10,11 +10,12 @@ const nextConfig = {
   },
   experimental: {
     serverActions: true,
+    serverComponentsExternalPackages: ["@prisma/client"]
   },
   webpack: (config) => {
-    config.node = {
-      __dirname: true,
-    };
+      config.node = {
+        __dirname: true,
+      };
     return config;
   },
 };

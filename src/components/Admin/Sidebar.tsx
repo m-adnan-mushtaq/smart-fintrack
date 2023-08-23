@@ -1,12 +1,12 @@
-import { AuxProps } from "@/lib/types";
+"use client"
+import { AuxProps} from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
 import AuthMenu from "../Auth/AuthMenu";
 import AdminLinks from "./AdminLinks";
-import IntroTour from "../Tour/IntroTour";
-import LazyLoader from "../Layout/LazyLoader";
 
 const SidebarLayout = ({ children }: AuxProps) => {
+
   return (
     <>
       <div className="drawer lg:drawer-open">
@@ -14,7 +14,6 @@ const SidebarLayout = ({ children }: AuxProps) => {
           id="my-drawer-2"
           type="checkbox"
           className="drawer-toggle"
-          defaultChecked={true}
         />
         <div className="drawer-content flex flex-col items-center justify-center">
           <label
@@ -56,9 +55,6 @@ const SidebarLayout = ({ children }: AuxProps) => {
           </div>
         </div>
       </div>
-      <LazyLoader>
-        <IntroTour enabled />
-      </LazyLoader>
     </>
   );
 };

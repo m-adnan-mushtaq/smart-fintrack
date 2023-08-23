@@ -1,7 +1,7 @@
-import { UserType } from "@/lib/types";
+import { DbUser } from "@/lib/types";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 export interface AuthState {
-  user: UserType | null;
+  user: DbUser | null;
   loading: boolean;
   verifyEmail: string;
 }
@@ -22,7 +22,7 @@ export const authSlice = createSlice({
     setVerifyEmail: (state, action: PayloadAction<string>) => {
       state.verifyEmail = action.payload;
     },
-    setAuth: (state, action: PayloadAction<UserType>) => {
+    setAuth: (state, action: PayloadAction<DbUser>) => {
       state.loading = false;
       state.user = action.payload;
     },

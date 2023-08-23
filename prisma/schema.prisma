@@ -20,7 +20,6 @@ model User {
   verified    Boolean      @default(false)
   picUrl      String       @default("/assets/avatar.svg")
   currency    String       @default("USD") @db.VarChar(10)
-  productTour Json?
   incomes     Income[]
   expenses    Expense[]
   savingGoals SavingGoal[]

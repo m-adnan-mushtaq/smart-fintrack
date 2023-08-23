@@ -4,7 +4,7 @@ import {
   defaultAavatarUrl,
   defaultCurrency,
 } from "../common/commont";
-import { Prisma } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 
 const currenciesArr = currenciesEnum();
 export const UserDbInput = z.object({
@@ -33,4 +33,4 @@ export const UserDbInput = z.object({
     .default(defaultCurrency),
 }) satisfies z.Schema<Prisma.UserCreateInput>;
 
-export type UserType = z.infer<typeof UserDbInput>;
+export type DbUser = z.infer<typeof UserDbInput>;
