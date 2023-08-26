@@ -7,7 +7,6 @@ class EmailService {
   static async sendVerificationEmail(job: Job) {
     try {
       const { email } = job.data;
-      return
       const otpCode = await otpService.generateOtop(email);
 
       await transporter.sendMail({

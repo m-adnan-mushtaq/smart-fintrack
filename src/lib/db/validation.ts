@@ -4,11 +4,11 @@ import {
   defaultAavatarUrl,
   defaultCurrency,
 } from "../common/commont";
-import { Prisma } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 
 const currenciesArr = currenciesEnum();
 export const UserDbInput = z.object({
-  name: z.string().nonempty({message:"Name can't be empty"}).trim().min(3).regex(/^[A-Za-z\s]+$/,{message:"Name should contain only letters and spaces!"}),
+  name: z.string().nonempty({message:"Name can't be empty"}).trim().min(3,{message:"Name sould have minimum 3 characters"}).regex(/^[A-Za-z\s]+$/,{message:"Name should contain only letters and spaces!"}),
   email: z.string().email({ message: "Invalid Email Address!" }),
   googleId: z.string().optional(),
   password: z.string().trim().min(5, { message: "Password too weak!" }).optional(),
@@ -33,4 +33,4 @@ export const UserDbInput = z.object({
     .default(defaultCurrency),
 }) satisfies z.Schema<Prisma.UserCreateInput>;
 
-export type UserType = z.infer<typeof UserDbInput>;
+export type DbUser = z.infer<typeof UserDbInput>;

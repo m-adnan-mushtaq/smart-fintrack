@@ -2,16 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-html{
-    scroll-behavior: smooth;
-    overflow-x: hidden !important;
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden !important;
 }
 
-img.show{
-    @apply  translate-y-0 md:translate-y-20 lg:translate-y-40 ;
+img.show {
+  @apply translate-y-0 md:translate-y-20 lg:translate-y-40;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+.custom-tooltip {
+  background: navy !important;
+}
+.custom-tooltip .introjs-tooltip-title {
+  @apply text-primary;
 }

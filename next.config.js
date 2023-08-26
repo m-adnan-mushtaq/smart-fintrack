@@ -12,9 +12,9 @@ const nextConfig = {
     serverActions: true,
   },
   webpack: (config) => {
-    config.node = {
-      __dirname: true,
-    };
+      config.node = {
+        __dirname: true,
+      };
     return config;
   },
 };

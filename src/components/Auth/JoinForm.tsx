@@ -1,48 +1,31 @@
 "use client";
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { joinInputs } from "@/lib/common/commont";
-import FormInput from "@components/Auth/FormInput";
-import { InputLabel } from "@/lib/types/types";
+import FormInput from "@components/Form/FromInput";
 import GoogleBtn from "@components/Auth/GoogleBtn";
 import Email from "@components/svg/Email";
 import CurrencyOptions from "../Layout/CurrencyOptions";
 import { createUser } from "@/lib/actions";
-import { CreateUserType, HandleValidationErrors, JoinDto } from "@/lib/dto";
-import { combinedErrorMap } from "@/lib/utils/utils";
+import {  CreateUserType, HandleValidationErrors, JoinDto } from "@/lib/dto";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import LoadingButton from "../Layout/LoadingButton";
-import { useDispatch } from "react-redux";
-import { setVerifyEmail } from "@/store/slices/auth.slice";
+import { useForm, FormProvider} from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useAuthStore } from "@/store";
 
 const JoinFrom = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
-  const [user, setUser] = useState<CreateUserType>({
-    name: "",
-    email: "",
-    password: "",
-    currency: "",
-  });
   const [isPending, startTransaction] = useTransition();
-
-  //input handler
-  const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUser((prevUser) => ({
-      ...prevUser,
-      [event.target.name]: event.target.value,
-    }));
-  };
-
-  const createNewUserHandler = () => {
+  const methods = useForm<CreateUserType>({resolver:zodResolver(JoinDto)});
+  const {updateVerifyEmail} = useAuthStore()
+  const createNewUserHandler = (data:CreateUserType) => {
     startTransaction(async () => {
       try {
-        const parsedUser = await JoinDto.safeParseAsync(user);
-        if (!parsedUser.success) throw combinedErrorMap(parsedUser.error);
-        const response = await createUser(user);
+        const response = await createUser(data);
         if (!response.success) throw Error(response.message);
-        dispatch(setVerifyEmail(parsedUser.data.email));
         toast.success("Your account is created!");
+        updateVerifyEmail(data.email)
         router.replace("/auth/verify");
       } catch (error) {
         HandleValidationErrors(error);
@@ -51,28 +34,29 @@ const JoinFrom = () => {
   };
   return (
     <>
-      <form className="grid grid-cols-1 my-4 gap-2 md:grid-cols-2">
-        {joinInputs.map((input: InputLabel) => (
-          <FormInput
-            key={input.name}
-            value={user[input.name as keyof typeof user]}
-            changed={inputHandler}
-            {...input}
-          />
-        ))}
-        <CurrencyOptions setUser={setUser} />
-      </form>
-      <div className="text-center">
-        <LoadingButton
-          clicked={createNewUserHandler}
-          loading={isPending}
-          style="btn-outline md:btn-md rounded-full"
-          type="secondary"
-        >
-          <Email />
-          Create My Account
-        </LoadingButton>
-      </div>
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(createNewUserHandler)} className="grid justify-center grid-cols-1 my-4 gap-2 md:grid-cols-2">
+          {joinInputs.map(input=>(
+            <FormInput
+              key={input.name}
+              {...input}
+              register={methods.register}
+              errorFeedback={methods.formState.errors[input.name as keyof CreateUserType]}            />
+          ))}
+          <CurrencyOptions />
+          <div className="text-center col-span-2">
+            <LoadingButton
+              loading={isPending}
+              style="btn-outline md:btn-md rounded-full"
+              type="secondary"
+              btnType="submit"
+            >
+              <Email />
+              Create My Account
+            </LoadingButton>
+          </div>
+        </form>
+      </FormProvider>
       <div className="divider">OR</div>
       <div className="text-center">
         <GoogleBtn size="md" />
@@ -81,5 +65,4 @@ const JoinFrom = () => {
   );
 };
 
-
-export default JoinFrom
+export default JoinFrom;

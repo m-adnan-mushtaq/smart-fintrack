@@ -1,67 +1,65 @@
 "use client";
-import { useState } from "react";
+import { useMemo } from "react";
+import { useForm } from "react-hook-form";
 import { logInputs } from "@/lib/common/commont";
-import { InputLabel } from "@/lib/types/types";
-import FormInput from "@components/Auth/FormInput";
+import FormInput from "@components/Form/FromInput";
 import GoogleBtn from "./GoogleBtn";
 import Email from "../svg/Email";
 import LoadingButton from "../Layout/LoadingButton";
 import { signIn } from "next-auth/react";
-import { HandleValidationErrors, LoginDto } from "@/lib/dto";
-import { combinedErrorMap } from "@/lib/utils/utils";
+import { HandleValidationErrors, LoginDto,  LoginUserType } from "@/lib/dto";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const LogInForm = () => {
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-  });
-  const [loading,setLoading]=useState(false)
+  const {
+    reset,
+    register,
+    formState: { errors, isLoading, isSubmitting, isValidating },
+    handleSubmit,
+  } = useForm<LoginUserType>({ resolver: zodResolver(LoginDto) });
 
-  //input handler
-  const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUser((prevUser) => ({
-      ...prevUser,
-      [event.target.name]: event.target.value,
-    }));
-  };
+  //handle loading state
+  const loading: boolean = useMemo(() => {
+    return isLoading || isSubmitting || isValidating;
+  }, [isLoading, isSubmitting, isValidating]);
+
   //login handler
-  const logInHandler=async ()=>{
+  const logInHandler = async (data: LoginUserType) => {
     try {
-      setLoading(true);
-      const validatedUser = await LoginDto.safeParseAsync(user);
-      if (!validatedUser.success) throw combinedErrorMap(validatedUser.error);
+      const { email, password } = data;
       const result = await signIn("credentials", {
-        email: validatedUser.data.email,
-        password: validatedUser.data.password,
+        email,
+        password,
         redirect: false,
       });
       if (result?.error) throw Error("Invalid Credentials, try again!");
+      reset();
     } catch (error) {
       HandleValidationErrors(error);
-    } finally {
-      setLoading(false);
     }
-  }
+  };
   return (
     <div>
-      {logInputs.map((input: InputLabel) => (
-        <FormInput
-          key={input.name}
-          value={user[input.name as keyof typeof user]}
-          changed={inputHandler}
-          {...input}
-        />
-      ))}
       <div className="text-center">
-        <LoadingButton
-          clicked={logInHandler}
-          loading={loading}
-          style="btn-outline md:btn-md rounded-full"
-          type="secondary"
-        >
-          <Email />
-          Continue to login
-        </LoadingButton>
+        <form onSubmit={handleSubmit(logInHandler)}>
+          {logInputs.map((input) => (
+            <FormInput
+              key={input.name}
+              {...input}
+              register={register}
+              errorFeedback={errors[input.name]}
+            />
+          ))}
+          <LoadingButton
+            loading={loading}
+            style="btn-outline md:btn-md rounded-full"
+            type="secondary"
+            btnType="submit"
+          >
+            <Email />
+            Continue to login
+          </LoadingButton>
+        </form>
       </div>
       <div className="divider">OR</div>
       <div className="text-center">
@@ -71,4 +69,4 @@ const LogInForm = () => {
   );
 };
 
-export default LogInForm
+export default LogInForm;

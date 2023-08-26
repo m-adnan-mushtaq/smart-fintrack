@@ -64,8 +64,10 @@ const SupportPage = () => {
         <Wave color="#37bcf1" />
       </div>
       <div className="max-w-screen-md px-4 text-center w-full mx-auto my-4">
-        <Title color="primary" type="level1">
-          reach us
+        <Title color="secondary" type="level1">
+          <span className="uppercase">
+            reach us
+          </span>
         </Title>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4  mt-8 ">
           {supportInfo.map((card) => (

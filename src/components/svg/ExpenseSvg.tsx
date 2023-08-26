@@ -1,11 +1,10 @@
-const ExpenseSvg = () => {
+const ExpenseSvg = ({size}:{size?:string}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
-      className="w-10 h-10"
-
+      className={size?`w-${size} h-${size}`:`w-10 h-10`}
     >
       <path d="M12 7.5a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5z" />
       <path

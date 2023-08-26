@@ -1,17 +1,14 @@
 "use client"
-import Spinner from "../Layout/Spinner"
 import GoogleBtn from "../Auth/GoogleBtn"
 import Link from "next/link"
 import Email from "../svg/Email"
-import { useSelector } from "react-redux"
-import { RootState } from "@/store"
+import { useAuthStore } from "@/store"
 
 const AuthLinks = () => {
- const {user,loading} = useSelector((state:RootState)=>state.auth)
+ const {user}=useAuthStore()
  let content;
- if(loading) content=<Spinner/>
  if(user) content=<></>
- if(!user && !loading) content=(
+ if(!user) content=(
     <>
      <p className="mt-10 text-xl">
         Get Your <span className="font-bold">free account today</span>

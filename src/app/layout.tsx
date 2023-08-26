@@ -2,7 +2,6 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Toaster } from "react-hot-toast";
 import RootProvider from "@/components/Provider/RootProvider";
-import Test from "@/components/Provider/ServerAuth";
 
 export const metadata: Metadata = {
   title: "Smart FinTrack",
@@ -51,6 +50,7 @@ export const metadata: Metadata = {
       url: "https://www.linkedin.com/in/m-adnan-mushtaq",
     },
   ],
+  themeColor:"#1a103c"
 };
 
 export default function RootLayout({

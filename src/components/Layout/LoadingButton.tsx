@@ -3,7 +3,7 @@ import { AuxProps } from "@/lib/types/types";
 interface BtnProps extends AuxProps {
   type: ColorType;
   style?:string,
-  clicked: () => void;
+  clicked?: () => void;
   loading: boolean;
   btnType?:"button"|"submit"|"reset"
 }

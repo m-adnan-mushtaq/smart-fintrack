@@ -1,1 +1,1 @@
-export type { UserType } from "@/lib/db/validation";
+export type {DbUser} from "@/lib/db/client"
