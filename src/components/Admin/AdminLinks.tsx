@@ -6,7 +6,8 @@ import { usePathname } from "next/navigation";
 const AdminLinks = () => {
   const path = usePathname();
   return (
-    <ul className="menu ">
+    <ul className="menu mt-2">
+      <li className="menu-title">Dashboard</li>
       {featuresData.map((feature) => (
         <li key={feature.path}>
           <Link

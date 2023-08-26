@@ -1,20 +1,14 @@
-"use client"
-import { AuxProps} from "@/lib/types";
+import { AuxProps } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
 import AuthMenu from "../Auth/AuthMenu";
 import AdminLinks from "./AdminLinks";
 
 const SidebarLayout = ({ children }: AuxProps) => {
-
   return (
     <>
       <div className="drawer lg:drawer-open">
-        <input
-          id="my-drawer-2"
-          type="checkbox"
-          className="drawer-toggle"
-        />
+        <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col items-center justify-center">
           <label
             htmlFor="my-drawer-2"
@@ -39,14 +33,17 @@ const SidebarLayout = ({ children }: AuxProps) => {
               </div>
             </Link>
             <div className="divider"></div>
-            <div className="mt-2">
-              <h5 className="font-bold text-slate-400 uppercase">Dashboard</h5>
-              <AdminLinks />
-            </div>
+            <AdminLinks />
+            <div className="divider"></div>
+            <ul className="menu mt-2">
+              <li className="menu-title">Account</li>
+              <li>
+                <Link href="/admin/profile">Profile</Link>
+              </li>
+            </ul>
             <div className="mt-auto">
               <div className="divider"></div>
               <div className="mt-2">
-                <h5 className="font-bold text-slate-400 uppercase">Account</h5>
                 <div className="px-4 py-2">
                   <AuthMenu size={80} position="top" />
                 </div>

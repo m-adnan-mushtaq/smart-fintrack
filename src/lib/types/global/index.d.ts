@@ -1,6 +1,6 @@
 type GenericObject = Record<string, any>;
 
-type Prettify<T> = {
+declare type Prettify<T> = {
   [K in keyof T]: T[k];
 };
 declare interface Feature {

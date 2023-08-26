@@ -1,17 +1,16 @@
-"use client"
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
 import { toast } from "react-hot-toast";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store";
+import { useAuthStore } from "@/store";
 
 interface MenuProps {
   size: number;
   position?: Position;
 }
-const AuthMenu = ({size, position }: MenuProps) => {
-  const {user} = useSelector((state:RootState)=>state.auth)
+const AuthMenu = ({ size, position }: MenuProps) => {
+  const {user} = useAuthStore()
   const logOutHandler = async () => {
     try {
       await signOut({ redirect: false });

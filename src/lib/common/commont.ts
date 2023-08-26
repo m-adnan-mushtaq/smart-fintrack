@@ -1,10 +1,11 @@
-import { InputLabel } from "../types/types";
+import { InputI} from "../types/types";
 import BudgetSvg from "@/components/svg/BudgetSvg";
 import ExpenseSvg from "@/components/svg/ExpenseSvg";
 import GraphSvg from "@/components/svg/GraphSvg";
 import IncomeSvg from "@/components/svg/IncomeSvg";
 import ReminderSvg from "@/components/svg/ReminderSvg";
 import SavingSvg from "@/components/svg/SavingSvg";
+import { CreateUserKeys, LoginKeys, LoginUserType } from "../dto";
 
 export const SITE_TITLE = "Smart Fintrack - ";
 export const SALT_ROUNDS = 10;
@@ -60,30 +61,29 @@ export const adminLinks: MenuLink[] = [
     path: "/admin/",
   },
 ];
-export const logInputs: InputLabel[] = [
+export const logInputs: InputI<LoginKeys>[] = [
   {
     name: "email",
     type: "email",
-    title: "What's your email?",
-    message: "Enter a valid email address!",
+    label: "What's your email?",
+    infoText: "Enter a valid email",
   },
   {
     name: "password",
     type: "password",
-    title: "Enter your password!",
-    message: "Minimum 5 characters!",
+    label: "Enter you password?",
+    infoText: "Minimum 5 characters",
   },
 ];
 
-export const joinInputs: InputLabel[] = [
+export const joinInputs:InputI<CreateUserKeys>[] = [
   {
     name: "name",
     type: "text",
-    title: "What's your Name?",
-    message: "Only letters and spaces are allowed",
-    sizes: "w-full max-w-sm",
+    label: "What's your Name?",
+    infoText: "Only letters and spaces are allowed",
   },
-  ...logInputs,
+  ...logInputs
 ];
 
 export const currencies = [
@@ -205,3 +205,5 @@ export const featuresData = [
     Icon: ReminderSvg,
   },
 ];
+
+export const SEKELETON_COLOR = "bg-blue-950";

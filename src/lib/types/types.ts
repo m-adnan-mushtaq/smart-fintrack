@@ -1,16 +1,21 @@
-export interface InputProps {
-  title: string;
-  type: "text" | "email" | "password" | "file";
-  name: string;
-  message: string;
-  value: string;
-  sizes?: string;
-  changed: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}
+import { FieldError, FieldValues, UseFormRegister } from "react-hook-form";
 
-export type InputLabel = Omit<InputProps, "changed" | "value">;
+type InputType = "text" | "email" | "password" | "file" | "number";
+
 export type AuxProps = {
   children: React.ReactNode;
+};
+
+export type InputI<K> = {
+  name: K;
+  label: string;
+  infoText: string;
+  type: InputType;
+  placeholder?: string;
+};
+export type TInput<K, F extends FieldValues> = InputI<K> & {
+  register: UseFormRegister<F>;
+  errorFeedback?:FieldError;
 };
 
 export interface ActionResponse {
@@ -19,7 +24,7 @@ export interface ActionResponse {
 }
 export interface MutationResponse<T> {
   success: boolean;
-  payload: T
+  payload: T;
 }
 
 export const enum QUEUE_NAMES {
@@ -31,8 +36,7 @@ export const enum JOB_NAMES {
   supportEmail = "SUPPORT_EMAIL",
 }
 
-export type SUPPORTED_TAGS="TOUR"
+export type SUPPORTED_TAGS = "BUDGET";
 export interface FetchOptions extends NextFetchRequestConfig {
-  tags: SUPPORTED_TAGS[]
+  tags: SUPPORTED_TAGS[];
 }
-

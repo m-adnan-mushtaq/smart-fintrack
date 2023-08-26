@@ -9,7 +9,7 @@ class RedisSingleton {
   static getInstance(): Redis {
     if (!RedisSingleton.instance) {
       RedisSingleton.instance = new Redis({
-        port: env.REDIS_LOCAL_PORT,
+        port: parseInt(env.REDIS_LOCAL_PORT),
         host: env.REDIS_LCOAL_HOST,
       });
     }

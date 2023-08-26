@@ -1,21 +1,23 @@
-import React from 'react'
 import { currencies } from "@/lib/common/commont";
-import { CreateUserType } from "@/lib/dto";
-import { SetStateAction, useMemo, useState } from "react";
+import { CreateUserKeys} from "@/lib/dto";
+import {  memo, useMemo, useState } from "react";
+import { useFormContext, useWatch } from "react-hook-form";
 
-const CurrencyOptions = ({setUser}:{setUser:React.Dispatch<SetStateAction<CreateUserType>>}) => {
+const currencyKey: CreateUserKeys = "currency";
+const CurrencyOptions = () => {
   const [open, SetOpen] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");
+  const { control, setValue } = useFormContext();
+  const currencyDefaultValue = useWatch({ control, name: currencyKey });
+
   const clickHandler = (event: React.MouseEvent<HTMLLIElement>) => {
     event.stopPropagation();
     const target = event.currentTarget as HTMLLIElement;
     const symbol = target.querySelector("span.symbol") as HTMLSpanElement;
-    const value=symbol.innerText
+    const value = symbol.innerText;
     setInput(value);
-    setUser((prevUser)=>({
-      ...prevUser,
-      currency:value
-    }))
+    //todo
+    setValue(currencyKey,value)
   };
   const filteredList = useMemo(() => {
     const regex = new RegExp(input, "igm");
@@ -29,10 +31,10 @@ const CurrencyOptions = ({setUser}:{setUser:React.Dispatch<SetStateAction<Create
   }: React.ChangeEvent<HTMLInputElement>) => {
     SetOpen(true);
     setInput(value);
-    setUser((prevUser)=>({
-      ...prevUser,
-      currency:value
-    }))
+
+    //todo
+    setValue(currencyKey,value)
+
   };
 
   return (
@@ -54,9 +56,11 @@ const CurrencyOptions = ({setUser}:{setUser:React.Dispatch<SetStateAction<Create
         }}
       />
       <label className="label">
-    <span className="label-text-alt"></span>
-    <span className="label-text-alt">Select one of supported currencies</span>
-  </label>
+        <span className="label-text-alt"></span>
+        <span className="label-text-alt">
+          Select one of supported currencies
+        </span>
+      </label>
       <ul
         className={`absolute z-10 menu menu-lg ${
           !open ? "opacity-0 invisible" : ""
@@ -85,4 +89,4 @@ const CurrencyOptions = ({setUser}:{setUser:React.Dispatch<SetStateAction<Create
   );
 };
 
-export default React.memo(CurrencyOptions);
+export default memo(CurrencyOptions);

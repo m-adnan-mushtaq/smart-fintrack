@@ -1,19 +1,14 @@
-"use client"
-import { AuxProps } from "@/lib/types"
-import { RootState } from "@/store"
-import { redirect } from "next/navigation"
-import { useSelector } from "react-redux"
+"use client";
+import { AuxProps } from "@/lib/types";
+import { useAuthStore } from "@/store";
+import { redirect } from "next/navigation";
 
-const RedirectAuth = ({children}:AuxProps) => {
- const {user} = useSelector((state:RootState)=>state.auth)
- if(user){
-     redirect("/admin")
- }
-  return (
-    <>
-        {children}
-    </>
-  )
-}
+const RedirectAuth = ({ children }: AuxProps) => {
+  const { user } = useAuthStore();
+  if (user && Object.keys(user).length) {
+    redirect("/admin");
+  }
+  return <>{children}</>;
+};
 
-export default RedirectAuth
+export default RedirectAuth;

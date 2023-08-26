@@ -10,8 +10,7 @@ import {
 } from "@/lib/actions";
 import { EmailDto, OtpDto } from "@/lib/dto";
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store";
+import { useAuthStore } from "@/store";
 
 const modalId = "verify_modal";
 const SendEmail = () => {
@@ -19,13 +18,14 @@ const SendEmail = () => {
   const otpRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
-  const { verifyEmail } = useSelector((state: RootState) => state.auth);
+  const { verifyEmail, updateVerifyEmail } = useAuthStore();
   const [isPending, startTransition] = useTransition();
   const verifyOtPHandler = () => {
     startTransition(async () => {
       try {
         const otp = otpRef.current?.value;
         const parsed = OtpDto.safeParse({ otp });
+        if (!verifyEmail) throw Error("Verify Email doesn't exists!");
         if (!parsed.success) throw Error("Otp must be 6 characters long!");
         const { message } = await verifyOtp(verifyEmail, parsed.data.otp);
         toast.success(message);
@@ -46,17 +46,18 @@ const SendEmail = () => {
         if (!parsedData.success) throw Error("Invalid Email Address!");
         const { success } = await checkEmailExists(parsedData.data.email);
         if (!success) throw Error("Email is not registered yet!");
-        await sendVerificationEmail(parsedData.data.email)
+        await sendVerificationEmail(parsedData.data.email);
         toast.success("Email has been sent");
         if (emailRef.current) {
           emailRef.current.value = "";
         }
-        modalRef.current?.close()
+        modalRef.current?.close();
+        updateVerifyEmail(email as string);
       } catch (error) {
         if (error instanceof Error) {
           toast.error(error.message);
         }
-      } 
+      }
     });
   };
   return (

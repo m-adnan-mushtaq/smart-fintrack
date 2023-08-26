@@ -1,21 +1,14 @@
-"use client"
-import { AuxProps} from "@/lib/types"
-import { RootState } from "@/store"
-import { redirect } from "next/navigation"
-import { useSelector } from "react-redux"
+"use client";
+import { AuxProps } from "@/lib/types";
+import { useAuthStore } from "@/store";
+import { redirect } from "next/navigation";
 
-
-const EnsureAuth = ({children}:AuxProps) => {
-  
-  const {user}= useSelector((state:RootState)=>state.auth)
-  if(!user){
-    redirect("/auth")
+const EnsureAuth = ({ children }: AuxProps) => {
+  const { user } = useAuthStore();
+  if (!user) {
+    redirect("/auth");
   }
-  return (
-    <>
-        {children}
-    </>
-  )
-}
+  return <>{children}</>;
+};
 
-export default EnsureAuth
+export default EnsureAuth;

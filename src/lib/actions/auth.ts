@@ -5,9 +5,6 @@ import { ActionResponse, JOB_NAMES } from "../types/types";
 import { otpService,  redis} from "../services";
 import { emailQueue } from "../services/jobs.service";
 import { Prisma } from "@prisma/client";
-import { DbUser } from "../types";
-import { store } from "@/store";
-import { resetAuth, setAuth } from "@/store/slices/auth.slice";
 
 
 export async function createUser(user: CreateUserType): Promise<ActionResponse> {
@@ -97,13 +94,3 @@ export async function sendSupportEmail(data: GenericObject) {
   }
 }
  
-export async function updateUserState(user:DbUser) {
-    store.dispatch(setAuth(user))
-    console.log("state sever side updated!",user.email);
-    return Promise.resolve()
-}
-
-export async function logOut(){
-  store.dispatch(resetAuth())
-
-}
