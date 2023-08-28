@@ -10,6 +10,7 @@ const nextConfig = {
   },
   experimental: {
     serverActions: true,
+    serverComponentsExternalPackages:["@prisma/client","ioredis","bull"]
   },
   webpack: (config) => {
       config.node = {

@@ -1,4 +1,4 @@
-import { otpService } from ".";
+import { logger, otpService } from ".";
 import { Job } from "bull";
 import { transporter } from "../config";
 
@@ -53,8 +53,8 @@ class EmailService {
     </div>
     `,
       });
+      logger.info(`Verification email has been sent to ${email}`)
     } catch (error) {
-      console.log(error);
       throw Error("Failed to send email!");
     }
   }
@@ -62,8 +62,6 @@ class EmailService {
   static async sendSupportMail(job: Job) {
     try {
       const { email, message, name } = job.data;
-      console.log(job.data);
-      
       await transporter.sendMail({
         from: "noreplay, smartfintrack@support.com",
         to: "malikkingoo68@gmail.com",
@@ -76,6 +74,8 @@ class EmailService {
         </h5>
         `,
       });
+      logger.info(`Support email has been sent to ${email}`)
+
     } catch (error) {
       throw error
     }

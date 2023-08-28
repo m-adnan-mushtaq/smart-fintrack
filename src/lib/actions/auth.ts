@@ -1,10 +1,12 @@
 "use server";
 import prismaClient from "@/lib/db/client";
 import { CreateUserType } from "../dto";
-import { ActionResponse, JOB_NAMES } from "../types/types";
-import { otpService,  redis} from "../services";
+import { ActionResponse} from "../types/types";
+import { logger, otpService,  redis} from "../services";
 import { emailQueue } from "../services/jobs.service";
 import { Prisma } from "@prisma/client";
+import { JOB_NAMES } from "../types-server";
+import { prepareInvalideKey } from "../utils/server-utils";
 
 
 export async function createUser(user: CreateUserType): Promise<ActionResponse> {
@@ -71,7 +73,10 @@ export async function verifyOtp(
         verified: true,
       },
     });
+    const cacheKey=prepareInvalideKey("User",emaiL)
+    await prismaClient.user.invalidateCache(cacheKey)
     await redis.del(otp);
+    logger.info(`New Account is created ${emaiL}`)
     return {
       success: true,
       message: "Account has been verified",

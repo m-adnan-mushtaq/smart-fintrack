@@ -1,6 +1,7 @@
-import { JOB_NAMES, QUEUE_NAMES } from "@/lib/types";
+import { JOB_NAMES, QUEUE_NAMES } from "@/lib/types-server";
 import Bull, { Queue, JobOptions, Job } from "bull";
 import { EmailService} from "./email.service";
+import { logger } from "./logger.service";
 class JobQueue {
   private readonly queue: Queue;
   private queueName: QUEUE_NAMES;
@@ -44,13 +45,13 @@ class JobQueue {
   }
   private async setupEventHandlers() {
     this.queue.on("completed", (job: Job) => {
-      console.log("job is completed with => ", this.giveJobDetails(job));
+      logger.debug("job is completed with => ", this.giveJobDetails(job));
     });
     this.queue.on("active", (job) => {
-      console.log("job is active now =>", this.giveJobDetails(job));
+      logger.debug("job is active now =>", this.giveJobDetails(job));
     });
     this.queue.on("failed", (job) => {
-      console.log("job is failed =>", this.giveJobDetails(job));
+      logger.error("job is failed =>", this.giveJobDetails(job));
     });
   }
   private giveJobDetails(job: Job) {

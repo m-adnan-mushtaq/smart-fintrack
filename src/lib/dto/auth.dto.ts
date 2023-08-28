@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { Prisma } from "@prisma/client";
-import { UserDbInput } from "../db/validation";
+import { UserDbInput } from "../db/validation/user.validation";
 import { ValidationErrors } from "../utils/utils";
 import { toast } from "react-hot-toast";
 

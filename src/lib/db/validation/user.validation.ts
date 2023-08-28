@@ -1,10 +1,10 @@
+import { Prisma } from "@prisma/client";
 import { z } from "zod";
 import {
   currenciesEnum,
   defaultAavatarUrl,
   defaultCurrency,
-} from "../common/commont";
-import { Prisma, PrismaClient } from "@prisma/client";
+} from "../../common/commont";
 
 const currenciesArr = currenciesEnum();
 export const UserDbInput = z.object({
