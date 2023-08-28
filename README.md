@@ -9,6 +9,7 @@
 </center>
 
 ## gonna be the most complex project i have ever built, stay tuned for more updates
+
 SmartFinTrack is a finance management website built using Next.js, PostgresSQL, Prisma, Tailwind CSS, and NextAuth.js for authentication. The application aims to help users manage their finances effectively by providing budgeting tools, income tracking, expense tracking, savings goals, bill reminders, and more.
 
 ## Features
@@ -49,6 +50,23 @@ Follow these steps to set up and run SmartFinTrack on your local machine:
 
    - Rename `.env` to `.env.local` and update the required environment variables for your database and NextAuth.js configuration.
 
+   ```bash
+   LOCAL_DATABASE_URL="YOUR_POSTGRESS_URL"
+   PRODUCTION_URL="YOUR PRODUCTION_URL"
+   LOCAL_URL="http://localhost3000:"
+   NEXTAUTH_URL="http://localhost:3000"
+   NEXTAUTH_SECRET="YOUR_APP_SECRET"
+   GOOGLE_CLIENT_ID="YOUR_GOOGLE_CLIENTID"
+   GOOGLE_CLIENT_SECRET="YOUR_GOOGLE_CLIENT_SECRET"
+   GOOGLE_REDIRECT_LOCAL_URL="http://localhost:3000/api/auth/callback/"
+   GOOGLE_REDIRECT_PROD_URL="PRODUCTION_URL_CALLBACK"
+   REDIS_LCOAL_HOST="REDIS_HOST"
+   REDIS_LOCAL_PORT="REDIS_PORT"
+   EMAIL_ADDRESS="YOUR_EMAIL_ADDRESS"
+   EMAIL_PASSWORD="YOUR_EMAIL_KEYPASSS"
+   PASSWORD_HASH="RANDOM_HASH"
+   ```
+
 4. Run Migrations:
 
    ```bash
@@ -72,4 +90,5 @@ Contributions to SmartFinTrack are welcome! Feel free to open issues for bug rep
 This project is licensed under the [MIT License](LICENSE).
 
 ## Author
+
 Adnan Malik Reach Me at [LinkedIn](https://www.linkedin.com/in/m-adnan-mushtaq)
