@@ -25,8 +25,8 @@ SmartFinTrack is a finance management website built using Next.js, PostgresSQL, 
 
 ## Tech Stack
 
-- Frontend: Next.js and Tailwind CSS
-- Backend: NextAuth.js for authentication, Prisma as the ORM, and PostgresSQL as the database.
+- Frontend: `Next.js`,  `Tailwind CSS`,`React Hook Form` , `Zustand` state manager and `Dasiy Ui`
+- Backend: `NextAuth` for authentication, `Prisma` as the ORM,  `PostgresSQL` as the database , `Bull` for background jobs `Redis` for cache layer.
 
 ## Getting Started
 
