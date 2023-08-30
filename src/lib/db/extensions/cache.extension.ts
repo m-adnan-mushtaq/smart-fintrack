@@ -11,12 +11,20 @@ export default Prisma.defineExtension((client) => {
     name: "cache-extension",
     model: {
       $allModels: {
-        invalidateCache: async (key: string) => {
+        invalidateCache: async (keys: string[]) => {
           try {
-            await redis.del(key);
-            logger.info(`CACHE IS INVALIDATE AT ${key}`);
+            const redisPipeLine = redis.pipeline();
+            keys.forEach((key) => {
+              redisPipeLine.del(key);
+              logger.info(`CACHE IS INVALIDATE AT ${key}`);
+            });
+            await redis.exec();
           } catch (error) {
-            logger.error(`ERROR WHILE INVALIDATING FOR ${key}`);
+            if (error instanceof Error) {
+              logger.error(
+                `ERROR WHILE INVALIDATING PIEPLINE ${error.message}`
+              );
+            }
           }
         },
       },
@@ -46,13 +54,8 @@ export default Prisma.defineExtension((client) => {
               }
 
               const cacheTime = prepareCacheTime(model);
-              await redis.hset(
-                hKey,
-                hField,
-                JSON.stringify(queryResult),
-                "EX",
-                cacheTime
-              );
+              await redis.hsetnx(hKey, hField, JSON.stringify(queryResult));
+              await redis.expire(hKey, cacheTime);
               logger.warn(`CACHE MISS : ${hKey}`);
               return queryResult;
             }

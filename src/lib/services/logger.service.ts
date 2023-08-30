@@ -19,12 +19,12 @@ class LoggerService {
           myFormat,
         ),
         transports: [
+          new transports.Console(),
           new transports.File({
             filename: "../logs/error.log",
             level: "error",
             maxsize:5242880, //5mb
           }),
-          new transports.Console(),
         ],
         defaultMeta: {
           service: "smart-fintrack",

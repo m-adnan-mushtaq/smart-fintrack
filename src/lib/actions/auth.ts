@@ -1,15 +1,16 @@
 "use server";
 import prismaClient from "@/lib/db/client";
 import { CreateUserType } from "../dto";
-import { ActionResponse} from "../types/types";
-import { logger, otpService,  redis} from "../services";
+import { ActionResponse } from "../types/types";
+import { logger, otpService } from "../services";
 import { emailQueue } from "../services/jobs.service";
 import { Prisma } from "@prisma/client";
 import { JOB_NAMES } from "../types-server";
 import { prepareInvalideKey } from "../utils/server-utils";
 
-
-export async function createUser(user: CreateUserType): Promise<ActionResponse> {
+export async function createUser(
+  user: CreateUserType
+): Promise<ActionResponse> {
   try {
     await prismaClient.user.signup(user);
     const { success, message } = await sendVerificationEmail(user.email);
@@ -40,7 +41,7 @@ export async function checkEmailExists(email: string): Promise<ActionResponse> {
     };
   } catch (error) {
     return { success: false, message: (error as Error).message };
-  } 
+  }
 }
 
 export async function sendVerificationEmail(
@@ -73,10 +74,9 @@ export async function verifyOtp(
         verified: true,
       },
     });
-    const cacheKey=prepareInvalideKey("User",emaiL)
-    await prismaClient.user.invalidateCache(cacheKey)
-    await redis.del(otp);
-    logger.info(`New Account is created ${emaiL}`)
+    const cacheKey = prepareInvalideKey("User", emaiL);
+    await prismaClient.user.invalidateCache([cacheKey,otp]);
+    logger.info(`New Account is created ${emaiL}`);
     return {
       success: true,
       message: "Account has been verified",
@@ -98,4 +98,3 @@ export async function sendSupportEmail(data: GenericObject) {
     throw Error("Failed to send messsage");
   }
 }
- 
