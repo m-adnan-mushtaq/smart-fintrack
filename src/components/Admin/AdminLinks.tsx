@@ -1,5 +1,5 @@
 "use client";
-import { featuresData } from "@/lib/common/commont";
+import { PROFILE_LINKS, featuresData } from "@/lib/common/commont";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -26,3 +26,25 @@ const AdminLinks = () => {
 };
 
 export default AdminLinks;
+
+export const ProfileLinks = () => {
+  const path = usePathname();
+  return (
+    <>
+      <div className="menu-title">Account</div>
+      <ul className="menu mt-2 capitalize">
+        {PROFILE_LINKS.map((link) => (
+          <li key={link.label}>
+            <Link
+              className={path === link.path ? "bg-base-100 text-primary" : ""}
+              href={"/admin/profile" + link.path}
+            >
+              <link.Icon size="6" />
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+};

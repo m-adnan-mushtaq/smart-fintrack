@@ -30,7 +30,7 @@ const FeatureCard = ({
 };
 const Features = () => {
   return (
-    <>
+    <section>
       <Title type="level2" color="primary">
         Our innovative Features
         <Line type="primary" />
@@ -46,7 +46,7 @@ const Features = () => {
           </div>
         ))}
       </div>
-    </>
+    </section>
   );
 };
 

@@ -13,6 +13,8 @@ export class RedisService {
         port: parseInt(env.REDIS_LOCAL_PORT),
         host: env.REDIS_LCOAL_HOST,
       });
+      console.log("new redis instance is created....");
+
       RedisService.instance.on("connect", () => {
         logger.info("redis service is connceted!");
         RedisService.connected = true;

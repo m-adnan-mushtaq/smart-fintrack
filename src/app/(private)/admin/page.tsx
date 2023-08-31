@@ -1,5 +1,7 @@
 // export const dynamic = "force-cache";
 import GraphLoader from "@/components/Ui/GraphLoader";
+import { SITE_TITLE } from "@/lib/common/commont";
+import type { Metadata } from "next";
 const AdminComponent = async () => {
   return (
     <div className="h-screen flex justify-center items-center">
@@ -7,6 +9,10 @@ const AdminComponent = async () => {
     </div>
   );
 };
+
+export const metaDate:Metadata={
+  title:SITE_TITLE+'Dashboard'
+}
 
 const page = async () => {
   return (

@@ -13,7 +13,7 @@ const FromInput = <TKeys, TUserType extends FieldValues>({
   return (
     <>
       <div className="form-control w-full">
-        <label className="label">
+        <label className="label capitalize">
           <span className="label-text">{label}</span>
           <span className="label-text-alt">{infoText}</span>
         </label>

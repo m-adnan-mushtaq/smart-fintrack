@@ -8,9 +8,10 @@ import { useAuthStore } from "@/store";
 interface MenuProps {
   size: number;
   position?: Position;
+  bg?: "neutral" | "bg-base-100";
 }
-const AuthMenu = ({ size, position }: MenuProps) => {
-  const {user} = useAuthStore()
+const AuthMenu = ({ size, position, bg }: MenuProps) => {
+  const { user } = useAuthStore();
   const logOutHandler = async () => {
     try {
       await signOut({ redirect: false });
@@ -34,7 +35,9 @@ const AuthMenu = ({ size, position }: MenuProps) => {
       </label>
       <ul
         tabIndex={0}
-        className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+        className={`mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content ${
+          bg ? `bg-${bg}` : "bg-base-100"
+        } rounded-box w-52`}
       >
         <div className="p-2 hover:bg-transparent cursor-auto">
           <p className="text-lg text-primary capitalize">{user.name}</p>
@@ -46,7 +49,7 @@ const AuthMenu = ({ size, position }: MenuProps) => {
           </Link>
         </li>
         <li>
-          <a>Profile</a>
+          <Link href="/admin/profile">Profile</Link>
         </li>
         <li>
           <button onClick={logOutHandler}>Logout</button>
