@@ -6,7 +6,8 @@ import { logger, otpService } from "../services";
 import { emailQueue } from "../services/jobs.service";
 import { Prisma } from "@prisma/client";
 import { JOB_NAMES } from "../types-server";
-import { prepareInvalideKey } from "../utils/server-utils";
+import { handleActionResponse } from "../utils/utils";
+import { updateUser } from ".";
 
 export async function createUser(
   user: CreateUserType
@@ -43,6 +44,20 @@ export async function checkEmailExists(email: string): Promise<ActionResponse> {
     return { success: false, message: (error as Error).message };
   }
 }
+export async function checkEmailAvailability(
+  email: string
+): Promise<ActionResponse> {
+  try {
+    const userCount = await prismaClient.user.count({ where: { email } });
+    if (Boolean(userCount)) throw Error("Email is already taken");
+    return {
+      success: true,
+      message: "",
+    };
+  } catch (error) {
+    return { success: false, message: (error as Error).message };
+  }
+}
 
 export async function sendVerificationEmail(
   email: string
@@ -62,24 +77,22 @@ export async function sendVerificationEmail(
 }
 
 export async function verifyOtp(
-  emaiL: string,
-  otp: string
+  email: string,
+  otp: string,
+  updateArgs: Prisma.UserUpdateArgs
 ): Promise<ActionResponse> {
   try {
-    if (!emaiL || !otp) throw Error("Invalid credentials");
-    await otpService.verifyOtp(emaiL, otp);
-    await prismaClient.user.update({
-      where: { email: emaiL },
-      data: {
-        verified: true,
-      },
-    });
-    const cacheKey = prepareInvalideKey("User", emaiL);
-    await prismaClient.user.invalidateCache([cacheKey,otp]);
-    logger.info(`New Account is created ${emaiL}`);
+    if (!updateArgs || !otp) throw Error("Invalid credentials");
+    await otpService.verifyOtp(email, otp);
+
+    await handleActionResponse(updateUser(updateArgs));
+
+    await prismaClient.user.invalidateCache([otp]);
+    logger.info(`Account is verified at ${email}`);
+
     return {
       success: true,
-      message: "Account has been verified",
+      message: "Email has been verified!",
     };
   } catch (error) {
     return {
@@ -98,3 +111,6 @@ export async function sendSupportEmail(data: GenericObject) {
     throw Error("Failed to send messsage");
   }
 }
+
+
+

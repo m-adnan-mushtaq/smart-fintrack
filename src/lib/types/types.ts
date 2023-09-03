@@ -27,6 +27,7 @@ export interface MutationResponse<T> {
   payload: T;
 }
 
+export type TStepContent = "✓" | "?" | "✕" | "!";
 
 
 export type SUPPORTED_TAGS = "BUDGET";

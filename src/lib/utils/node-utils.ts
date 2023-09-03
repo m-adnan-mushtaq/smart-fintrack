@@ -2,6 +2,10 @@ import { DbUser } from "../types";
 import { getServerSession } from "next-auth";
 import { authConfig } from "../config";
 
+/***********************************/
+/* FILE CONTAINS HELPER FUNCTION FOR API ROUTES*/
+/***********************************/
+
 export class ApiError extends Error {
   constructor(public message: string, public statusCode: number) {
     super(message);

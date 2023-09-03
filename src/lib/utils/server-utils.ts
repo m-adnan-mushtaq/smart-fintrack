@@ -1,35 +1,26 @@
-import { headers } from "next/headers";
-import { FetchOptions } from "../types";
+import { ActionResponse} from "../types";
 import { Prisma } from "@prisma/client";
 import { randomUUID } from "crypto";
 
-export async function getServerFetch(url: string, options: FetchOptions) {
-  //for making api requests
-  const headrs = headers();
-  const cookie = headrs.get("cookie");
-  // console.log(headeres.get("cookie"));
-  const response = await fetch(url, {
-    next: options,
-    cache: "force-cache",
-    headers: {
-      cookie: cookie!,
-    },
-  });
-  if (!response.ok || response.status >= 310) throw Error(response.statusText);
-  return response.json();
-}
-export async function getStaticFetch(url: string, options: FetchOptions) {
-  const response = await fetch(url, {
-    next: options,
-    cache: "force-cache",
-  });
-  if (!response.ok || response.status >= 310) throw Error(response.statusText);
-  return response.json();
-}
+/***********************************/
+/* FILE CONTAINS HELPER FUNCTION FOR SERVER ACTIONS*/
+/***********************************/
+/**
+ * 
+ * @param model 
+ * @param key 
+ * @returns prepare invalida key for invalidating cache
+ */
+export const prepareInvalideKey = (model: Prisma.ModelName, key: string) => {
+  return `${key}-${model}`;
+};
 
-export const prepareInvalideKey=(model:Prisma.ModelName,key:string)=>{
-  return `${key}-${model}`
-}
+/**
+ * 
+ * @param args 
+ * @param model 
+ * @returns prepare proper cache key for storing cache in redis
+ */
 export const prepareFindCacheKey = (
   args: any,
   model: Prisma.ModelName
@@ -39,16 +30,25 @@ export const prepareFindCacheKey = (
 } => {
   let hKey = "";
   if (model === "User") {
-    hKey = args.where.email ?? args.where.id ?? randomUUID();
+    hKey = args.where.email
+      ? args.where.email
+      : args.where.id
+      ? args.where.id
+      : randomUUID();
   } else {
     hKey = args.where?.user?.id ?? randomUUID();
   }
   const flattenArgs = flattenObject(args);
   const hField = joinObject(flattenArgs);
-  hKey=`${hKey}-${model}`
+  hKey = `${hKey}-${model}`;
   return { hKey, hField };
 };
 
+/**
+ * 
+ * @param model 
+ * @returns cache time depending upon type of model
+ */
 export const prepareCacheTime = (model: Prisma.ModelName): number => {
   let cache_time = 1800;
   if (model === "User") {
@@ -80,3 +80,21 @@ function joinObject(obj: GenericObject) {
     .map((key) => `${key}-${obj[key]}`)
     .join("-");
 }
+
+/**
+ * 
+ * @param error 
+ * @returns action response containing apporpriate error message
+ */
+export function reformActionErrorHelper(error: any): ActionResponse {
+  let message = error;
+  if (error instanceof Error) {
+    message = error.message;
+  }
+  return {
+    success: false,
+    message,
+  };
+}
+
+

@@ -3,7 +3,7 @@
 
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["fullTextSearch","clientExtensions"]
+  previewFeatures = ["clientExtensions"]
 }
 
 datasource db {
@@ -12,19 +12,21 @@ datasource db {
 }
 
 model User {
-  id          String       @id @default(uuid())
-  name        String       @db.VarChar(50)
-  email       String       @unique
-  password    String?
-  googleId    String?      @db.VarChar(50)
-  verified    Boolean      @default(false)
-  picUrl      String       @default("/assets/avatar.svg")
-  currency    String       @default("USD") @db.VarChar(10)
-  incomes     Income[]
-  expenses    Expense[]
-  savingGoals SavingGoal[]
-  Budget      Budget?
-  createdAt DateTime @default(now())
+  id           String        @id @default(uuid())
+  name         String        @db.VarChar(50)
+  email        String        @unique
+  password     String?
+  googleId     String?       @db.VarChar(50)
+  verified     Boolean       @default(false)
+  picUrl       String        @default("/assets/avatar.svg")
+  currency     String        @default("USD") @db.VarChar(10)
+  incomes      Income[]
+  expenses     Expense[]
+  savingGoals  SavingGoal[]
+  Budget       Budget?
+  createdAt    DateTime      @default(now())
+  activityLogs ActivityLog[] @relation("activityLogs")
+  causeLogs    ActivityLog[] @relation("causeLogs")
 
   @@index([name], type: Hash)
 }
@@ -91,6 +93,18 @@ model Expense {
   @@index([title], type: Hash)
 }
 
+model ActivityLog {
+  id          String   @id @default(uuid())
+  sender      User?    @relation("causeLogs", fields: [senderId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  recipient   User     @relation("activityLogs", fields: [recipientId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  senderId    String?   
+  recipientId String   @unique
+  type        LogType
+  createdAt   DateTime @default(now())
+
+  @@index([createdAt(sort: Desc)])
+}
+
 enum BudgetType {
   STUDENT
   PERSONAL
@@ -102,4 +116,13 @@ enum ExpenseCat {
   VAIRABLE
   BILL
   FUN
+}
+
+enum LogType {
+  EMAIL_UPDATED
+  PASSWORD_UPDATED
+  BUDGET_ADDED
+  SAVING_GOAL_ADDED
+  EXPENSE_ADDED
+  INCOME_SOURCE_ADDED
 }

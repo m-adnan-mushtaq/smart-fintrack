@@ -22,8 +22,6 @@ const SupportFrom = () => {
       } catch (error) {
         HandleValidationErrors(error)
       }
-      
-      
     })
   };
   return (

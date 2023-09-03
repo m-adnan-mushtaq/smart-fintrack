@@ -1,11 +1,15 @@
-import { InputI} from "../types/types";
+import { InputI } from "../types/types";
+import { CreateUserKeys, LoginKeys, SecurityKeys } from "../dto";
 import BudgetSvg from "@/components/svg/BudgetSvg";
 import ExpenseSvg from "@/components/svg/ExpenseSvg";
 import GraphSvg from "@/components/svg/GraphSvg";
 import IncomeSvg from "@/components/svg/IncomeSvg";
 import ReminderSvg from "@/components/svg/ReminderSvg";
 import SavingSvg from "@/components/svg/SavingSvg";
-import { CreateUserKeys, LoginKeys, LoginUserType } from "../dto";
+import AccountSvg from "@/components/svg/AccountSvg";
+import LockSvg from "@/components/svg/LockSvg";
+import VerifySvg from "@/components/svg/VerifySvg";
+import BellSvg from "@/components/svg/BellSvg";
 
 export const SITE_TITLE = "Smart Fintrack - ";
 export const SALT_ROUNDS = 10;
@@ -76,16 +80,30 @@ export const logInputs: InputI<LoginKeys>[] = [
   },
 ];
 
-export const joinInputs:InputI<CreateUserKeys>[] = [
+export const joinInputs: InputI<CreateUserKeys>[] = [
   {
     name: "name",
     type: "text",
     label: "What's your Name?",
     infoText: "Only letters and spaces are allowed",
   },
-  ...logInputs
+  ...logInputs,
 ];
 
+export const securityInputs: InputI<SecurityKeys>[] = [
+  {
+    infoText: "Enter your new password",
+    label: "New password",
+    name: "newPassword",
+    type: "password",
+  },
+  {
+    infoText: "Password must match new password",
+    label: "Confirm password",
+    name: "confirmPassword",
+    type: "password",
+  },
+];
 export const currencies = [
   { name: "US Dollar", symbol: "USD" },
   { name: "Euro", symbol: "EUR" },
@@ -174,7 +192,7 @@ export const featuresData = [
   },
   {
     title: "Income Tracking",
-    path: "/admin/icome",
+    path: "/admin/income",
     selector: "income-link",
     description:
       "Never lose sight of your income sources again. Our income tracking feature allows you to log and categorize your various income streams, helping you understand your cash flow and make informed financial decisions.",
@@ -207,3 +225,26 @@ export const featuresData = [
 ];
 
 export const SEKELETON_COLOR = "bg-blue-950";
+
+export const PROFILE_LINKS = [
+  {
+    label: "Settings",
+    path: "/admin/profile",
+    Icon: AccountSvg,
+  },
+  {
+    label: "Security",
+    path: "/admin/profile/security",
+    Icon: LockSvg,
+  },
+  {
+    label: "Verification",
+    path: "/admin/profile/verification",
+    Icon: VerifySvg,
+  },
+  {
+    label: "Activity Log",
+    path: "/admin/profile/activity",
+    Icon: BellSvg,
+  },
+];

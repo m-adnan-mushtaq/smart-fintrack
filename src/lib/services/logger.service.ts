@@ -17,10 +17,15 @@ class LoggerService {
           },
         },
         categories: {
-          default: { appenders: ["console", "fileLogs"], level: "error" },
+          default: { appenders: ["console"], level: "debug" },
+          "default.fileLogs": { appenders: ["fileLogs"], level: "error" },
         },
       });
-      LoggerService.instance = log4js.getLogger();
+      if (process.env.NODE_ENV === "production") {
+        LoggerService.instance = log4js.getLogger("default.fileLogs");
+      } else {
+        LoggerService.instance = log4js.getLogger();
+      }
     }
     return LoggerService.instance;
   }

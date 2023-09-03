@@ -8,7 +8,7 @@
 </div>
 </center>
 
-## Description
+## What actually this project is?
 
 SmartFinTrack is a finance management website built using Next.js, PostgresSQL, Prisma, Tailwind CSS, and NextAuth.js for authentication. The application aims to help users manage their finances effectively by providing budgeting tools, income tracking, expense tracking, savings goals, bill reminders, and more.
 

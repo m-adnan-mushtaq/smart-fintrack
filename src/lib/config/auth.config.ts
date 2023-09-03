@@ -1,4 +1,4 @@
-import prismaClient from "@/lib/db/client";
+import prismaClient, { DbUser } from "@/lib/db/client";
 import { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -73,18 +73,33 @@ export const authConfig: AuthOptions = {
       } catch (error) {
         console.log(error);
         throw error;
-      } 
+      }
     },
-    async session({ session }) {
+    async jwt({ token, trigger, session }) {
       try {
+        let email = token.email as string;
+        if (trigger === "update") {
+          if(session?.email){
+            // send updated user email in update()
+            email = session.email;
+          }
+        }
         const foundUser = await prismaClient.user.findUnique({
-          where: { email: session.user?.email as string },
+          where: { email },
         });
         if (!foundUser) throw Error("No user found!");
         const { password, ...rest } = foundUser;
+        token.user = rest;
+        return token;
+      } catch (error) {
+        throw Error("Invalid User");
+      }
+    },
+    async session({ session, token }) {
+      try {
         return {
           ...session,
-          user: rest,
+          user: token.user as DbUser,
         };
       } catch (error) {
         throw error;
