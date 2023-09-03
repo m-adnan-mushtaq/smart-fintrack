@@ -38,7 +38,7 @@ const Navbar = () => {
           <MenuLinks />
         </ul>
       </div>
-      <div className="navbar-end">
+      <div className="navbar-end me-4">
         <NavMenu  />
       </div>
     </nav>

@@ -1,6 +1,7 @@
 import { ZodError } from "zod";
+import { ActionResponse } from "../types";
 /***********************************/
-/* FILE CONTAINS HELPER FUNCTION*/
+/* FILE CONTAINS HELPER FUNCTION FOR OVERALL*/
 /***********************************/
 
 class ValidationErrors extends Error {
@@ -21,9 +22,25 @@ const combinedErrorMap = (error: ZodError) => {
   return new ValidationErrors(errors);
 };
 
+/**
+ *
+ * @param promise
+ * @returns success message after executing promise
+ */
+async function handleActionResponse(
+  promise: Promise<ActionResponse>
+): Promise<string> {
+  try {
+    const response = await promise;
 
+    if (!response.success) {
+      throw new Error(response.message);
+    }
 
-export {
-    ValidationErrors,
-    combinedErrorMap
+    return response.message;
+  } catch (error) {
+    throw error;
+  }
 }
+
+export { ValidationErrors, combinedErrorMap, handleActionResponse };

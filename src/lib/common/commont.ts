@@ -92,12 +92,6 @@ export const joinInputs: InputI<CreateUserKeys>[] = [
 
 export const securityInputs: InputI<SecurityKeys>[] = [
   {
-    infoText: "Enter your old password",
-    label: "old password",
-    name: "oldPassword",
-    type: "password",
-  },
-  {
     infoText: "Enter your new password",
     label: "New password",
     name: "newPassword",
@@ -198,7 +192,7 @@ export const featuresData = [
   },
   {
     title: "Income Tracking",
-    path: "/admin/icome",
+    path: "/admin/income",
     selector: "income-link",
     description:
       "Never lose sight of your income sources again. Our income tracking feature allows you to log and categorize your various income streams, helping you understand your cash flow and make informed financial decisions.",
@@ -235,22 +229,22 @@ export const SEKELETON_COLOR = "bg-blue-950";
 export const PROFILE_LINKS = [
   {
     label: "Settings",
-    path: "/",
+    path: "/admin/profile",
     Icon: AccountSvg,
   },
   {
     label: "Security",
-    path: "/security",
+    path: "/admin/profile/security",
     Icon: LockSvg,
   },
   {
     label: "Verification",
-    path: "/verification",
+    path: "/admin/profile/verification",
     Icon: VerifySvg,
   },
   {
     label: "Activity Log",
-    path: "/activity",
+    path: "/admin/profile/activity",
     Icon: BellSvg,
   },
 ];

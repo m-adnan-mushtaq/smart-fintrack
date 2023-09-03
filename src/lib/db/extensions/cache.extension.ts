@@ -13,12 +13,12 @@ export default Prisma.defineExtension((client) => {
       $allModels: {
         invalidateCache: async (keys: string[]) => {
           try {
-            const redisPipeLine = redis.pipeline();
+            const pipeline=redis.pipeline()
             keys.forEach((key) => {
-              redisPipeLine.del(key);
+              pipeline.del(key)
               logger.info(`CACHE IS INVALIDATE AT ${key}`);
             });
-            await redis.exec();
+            await pipeline.exec()
           } catch (error) {
             if (error instanceof Error) {
               logger.error(
@@ -33,7 +33,7 @@ export default Prisma.defineExtension((client) => {
       $allModels: {
         $allOperations: async ({ query, args, model, operation }) => {
           try {
-            const excludeModels: Prisma.ModelName[] = [];
+            const excludeModels: Prisma.ModelName[] = ["ActivityLog"];
             const queryResult = await query(args);
 
             if (
@@ -45,7 +45,10 @@ export default Prisma.defineExtension((client) => {
             }
 
             //read cache or hit cache
-            if (cacheMethods.includes(operation)) {
+            if (
+              cacheMethods.includes(operation) &&
+              typeof queryResult !== "undefined"
+            ) {
               const { hKey, hField } = prepareFindCacheKey(args, model);
               const cacheHit = await redis.hget(hKey, hField);
               if (cacheHit) {

@@ -2,7 +2,7 @@ import AuthMenu from "../Auth/AuthMenu";
 
 const AdminNav = () => {
   return (
-    <nav className="navbar bg-neutral">
+    <nav className="navbar bg-neutral px-4">
       <div className="flex-1">
         <label
           htmlFor="my-drawer-2"

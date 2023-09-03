@@ -20,29 +20,25 @@ const CameraIcon = () => (
 const Uploader = () => {
   const { user } = useAuthStore();
   return (
-    <section>
-      <div className="indicator">
-        <div className="indicator-item indicator-bottom ">
-          <div
-            className="tooltip tooltip-left"
-            data-tip="Update Profile Picture"
-          >
-            <button className="badge badge-info">
-              <CameraIcon />
-            </button>
-          </div>
+    <section className="relative rounded-full">
+      <div className="avatar">
+        <div className="w-24 rounded-full ">
+          <Image
+            src={user?.picUrl as string}
+            loading="lazy"
+            alt={user?.name as string}
+            referrerPolicy="no-referrer"
+            fill
+          />
         </div>
-        <div className="avatar">
-          <div className="w-24 rounded-full">
-            <Image
-              src={user?.picUrl as string}
-              loading="lazy"
-              alt={user?.name as string}
-              referrerPolicy="no-referrer"
-              fill
-            />
-          </div>
-        </div>
+      </div>
+      <div
+        className="tooltip tooltip-bottom tooltip-secondary"
+        data-tip="Update Profile Picture"
+      >
+        <button className="btn-sm btn-neutral btn-block absolute bottom-0">
+          <CameraIcon />
+        </button>
       </div>
       <input type="file" name="avatar" className="hidden" />
     </section>

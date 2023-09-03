@@ -36,13 +36,13 @@ export const MessageDto = JoinDto.pick({ email: true, name: true }).merge(
 );
 
 export const SecurityDto = z.object({
-  oldPassword: PasswordDto,
   newPassword: PasswordDto,
   confirmPassword: PasswordDto,
 }).refine(({newPassword,confirmPassword})=>{
   return newPassword===confirmPassword
 },{message:"Password must be same",path:["confirmPassword"]});
 
+export const NameDto=UserDbInput.pick({name:true})
 export type CreateUserType = z.infer<typeof JoinDto>;
 export type LoginUserType = z.infer<typeof LoginDto>;
 export type LoginKeys = keyof LoginUserType;

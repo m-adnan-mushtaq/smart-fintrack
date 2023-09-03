@@ -27,7 +27,12 @@ const SendEmail = () => {
         const parsed = OtpDto.safeParse({ otp });
         if (!verifyEmail) throw Error("Verify Email doesn't exists!");
         if (!parsed.success) throw Error("Otp must be 6 characters long!");
-        const { message } = await verifyOtp(verifyEmail, parsed.data.otp);
+        const { message } = await verifyOtp(verifyEmail, parsed.data.otp, {
+          where: { email: verifyEmail },
+          data: {
+            verified: true,
+          },
+        });
         toast.success(message);
         router.replace("/auth");
       } catch (error) {

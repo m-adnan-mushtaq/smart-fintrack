@@ -37,7 +37,7 @@ export const ProfileLinks = () => {
           <li key={link.label}>
             <Link
               className={path === link.path ? "bg-base-100 text-primary" : ""}
-              href={"/admin/profile" + link.path}
+              href={link.path}
             >
               <link.Icon size="6" />
               {link.label}
