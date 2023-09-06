@@ -7,8 +7,9 @@ import {
   reformActionErrorHelper,
 } from "@/lib/utils/server-utils";
 import { ActionResponse } from "@/lib/types";
-import { handleActionResponse } from "../utils/utils";
-import { PasswordServie } from "../services";
+import { getUserChannel, handleActionResponse } from "../utils/utils";
+import { PasswordServie, pusher } from "../services";
+import { PUSHER_EVENTS } from "../types-server";
 
 export async function updateSecurityCredentials(
   id: string,
@@ -29,7 +30,7 @@ export async function updateSecurityCredentials(
 }
 export async function updateUser(
   updateArgs: Prisma.UserUpdateArgs
-): Promise<ActionResponse>{
+): Promise<ActionResponse> {
   try {
     //find user for preparing invalidating key
     const foundUser = await prismaClient.user.findUnique({
@@ -42,6 +43,11 @@ export async function updateUser(
     await prismaClient.user.update(updateArgs as any);
     //invalidate cache against user model
     await prismaClient.user.invalidateCache([cacheKey1, cacheKey2]);
+    await pusher.trigger(
+      getUserChannel(foundUser.id),
+      PUSHER_EVENTS.profileUpdated,
+      { message: "show activiy log", refetch: true }
+    );
     return {
       success: true,
       message: "Profile got updated!",

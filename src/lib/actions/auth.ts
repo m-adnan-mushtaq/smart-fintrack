@@ -2,7 +2,7 @@
 import prismaClient from "@/lib/db/client";
 import { CreateUserType } from "../dto";
 import { ActionResponse } from "../types/types";
-import { logger, otpService } from "../services";
+import { logger, otpService, pusher } from "../services";
 import { emailQueue } from "../services/jobs.service";
 import { Prisma } from "@prisma/client";
 import { JOB_NAMES } from "../types-server";
@@ -111,6 +111,4 @@ export async function sendSupportEmail(data: GenericObject) {
     throw Error("Failed to send messsage");
   }
 }
-
-
 

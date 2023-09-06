@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { UserDbInput } from "../validation/user.validation";
+import { UserDbInput } from "../validation";
 import { CreateUserType } from "@/lib/dto";
 import { PasswordServie } from "@/lib/services";
 

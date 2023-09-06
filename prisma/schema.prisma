@@ -27,8 +27,6 @@ model User {
   createdAt    DateTime      @default(now())
   activityLogs ActivityLog[] @relation("activityLogs")
   causeLogs    ActivityLog[] @relation("causeLogs")
-
-  @@index([name], type: Hash)
 }
 
 model Budget {
@@ -97,12 +95,14 @@ model ActivityLog {
   id          String   @id @default(uuid())
   sender      User?    @relation("causeLogs", fields: [senderId], references: [id], onDelete: Cascade, onUpdate: NoAction)
   recipient   User     @relation("activityLogs", fields: [recipientId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  senderId    String?   
-  recipientId String   @unique
+  senderId    String?
+  recipientId String
   type        LogType
   createdAt   DateTime @default(now())
+  entityId    String
+  isRead      Boolean  @default(false)
 
-  @@index([createdAt(sort: Desc)])
+  @@index([recipientId, isRead, createdAt(sort: Desc)])
 }
 
 enum BudgetType {
@@ -121,6 +121,7 @@ enum ExpenseCat {
 enum LogType {
   EMAIL_UPDATED
   PASSWORD_UPDATED
+  PROFILE_UPDATED
   BUDGET_ADDED
   SAVING_GOAL_ADDED
   EXPENSE_ADDED

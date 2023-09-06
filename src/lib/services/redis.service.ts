@@ -1,5 +1,5 @@
 import { Redis } from "ioredis";
-import { env } from "../config";
+import { env } from "../config/env.config";
 import { logger } from "./logger.service";
 
 export class RedisService {

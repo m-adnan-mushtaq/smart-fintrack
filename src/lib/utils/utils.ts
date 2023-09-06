@@ -43,4 +43,7 @@ async function handleActionResponse(
   }
 }
 
+export function getUserChannel(userId:string){
+  return `private-user-${userId}`
+}
 export { ValidationErrors, combinedErrorMap, handleActionResponse };

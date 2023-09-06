@@ -10,12 +10,18 @@ const nextConfig = {
   },
   experimental: {
     serverActions: true,
-    serverComponentsExternalPackages:["@prisma/client","ioredis","bull","log4js"]
+    serverComponentsExternalPackages: [
+      "@prisma/client",
+      "ioredis",
+      "bull",
+      "log4js",
+      "pusher"
+    ],
   },
   webpack: (config) => {
-      config.node = {
-        __dirname: true,
-      };
+    config.node = {
+      __dirname: true,
+    };
     return config;
   },
 };

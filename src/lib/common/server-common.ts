@@ -1,4 +1,4 @@
-import { env } from "../config";
+import { env } from "../config/env.config";
 
 export type PrismaOperation="findFirst" | "findFirstOrThrow" | "findUnique" | "findUniqueOrThrow" | "findMany" | "create" | "createMany" | "update" | "updateMany" | "upsert" | "delete" | "deleteMany" | "aggregate" | "count" | "groupBy"
 
@@ -21,3 +21,6 @@ export const invalidateMethods: PrismaOperation[] = [
   "updateMany",
   "deleteMany",
 ];
+
+
+export const PROFILE_ROUTE="/admin/profile"

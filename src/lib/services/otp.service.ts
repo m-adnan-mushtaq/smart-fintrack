@@ -10,7 +10,7 @@ class OtpService {
       const numbersSet = "1234567890";
       const setLeng = numbersSet.length;
       let otp = "";
-      for (let i = 0; i <= this.otpLen; i++) {
+      for (let i = 0; i < this.otpLen; i++) {
         otp += numbersSet[Math.floor(Math.random() * setLeng)];
       }
       await redis.set(otp, email, "EX", OPT_EXIPIRE_TIME);
