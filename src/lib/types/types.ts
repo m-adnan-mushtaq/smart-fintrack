@@ -1,4 +1,6 @@
 import { FieldError, FieldValues, UseFormRegister } from "react-hook-form";
+import { QUERY_TAGS_KEYS } from "../common/commont";
+import { ActivityI } from "../types-server";
 
 type InputType = "text" | "email" | "password" | "file" | "number";
 
@@ -15,7 +17,7 @@ export type InputI<K> = {
 };
 export type TInput<K, F extends FieldValues> = InputI<K> & {
   register: UseFormRegister<F>;
-  errorFeedback?:FieldError;
+  errorFeedback?: FieldError;
 };
 
 export interface ActionResponse {
@@ -29,9 +31,11 @@ export interface MutationResponse<T> {
 
 export type TStepContent = "✓" | "?" | "✕" | "!";
 
-
-export type SUPPORTED_TAGS = "BUDGET";
 export interface FetchOptions extends NextFetchRequestConfig {
-  tags: SUPPORTED_TAGS[];
+  tags: QUERY_TAGS_KEYS[];
 }
 
+export type UnReadActivityResponse = {
+  unReadCount: 0;
+  activityLogs: ActivityI[];
+};

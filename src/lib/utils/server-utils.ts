@@ -1,6 +1,7 @@
 import { ActionResponse} from "../types";
 import { Prisma } from "@prisma/client";
 import { randomUUID } from "crypto";
+import { logger } from "../services";
 
 /***********************************/
 /* FILE CONTAINS HELPER FUNCTION FOR SERVER ACTIONS*/
@@ -91,6 +92,7 @@ export function reformActionErrorHelper(error: any): ActionResponse {
   if (error instanceof Error) {
     message = error.message;
   }
+  logger.error(message)
   return {
     success: false,
     message,

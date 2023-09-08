@@ -3,7 +3,6 @@ import { AuxProps } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
 import AdminLinks, { ProfileLinks } from "./AdminLinks";
-import AdminNav from "./AdminNav";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
@@ -14,6 +13,33 @@ const SidebarLayout = ({ children }: AuxProps) => {
     setOpen(false);
   }, [path]);
 
+  
+  //   const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
+  //     cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
+  //     channelAuthorization: {
+  //       endpoint: "/api/v1/pusher/auth",
+  //       transport: "ajax",
+  //     },
+  //   });
+  //   const channelName = getUserChannel(user?.id as string);
+  //   const userChannel = pusher.subscribe(channelName);
+  //   userChannel.bind(PUSHER_EVENTS.profileUpdated, (data: GenericObject) => {
+  //     console.log({ data });
+  //   });
+
+  //   userChannel.bind("pusher:subscription_succeeded",()=>{
+  //     toast.success("Real time service is enabled!")
+  //     updatePusherStatus(true)
+  //   })
+  //   userChannel.bind("pusher:subscription_error",()=>{
+  //     toast.error("Real time service disabled")
+  //     updatePusherStatus(false)
+  //   })
+  //   return () => {
+  //     pusher.unsubscribe(channelName);
+  //     pusher.disconnect()
+  //   };
+  // }, []);
   return (
     <>
       <aside className="drawer lg:drawer-open">
@@ -27,13 +53,7 @@ const SidebarLayout = ({ children }: AuxProps) => {
           className="drawer-toggle"
         />
         <div className="drawer-content">
-          <AdminNav />
-          <main
-            className="p-4 overflow-y-auto overflow-x-hidden"
-            style={{ height: "calc(100vh - 4.5rem)" }}
-          >
-            {children}
-          </main>
+          {children}
         </div>
         <div className="drawer-side z-[999]">
           <label htmlFor="my-drawer-2" className="drawer-overlay "></label>

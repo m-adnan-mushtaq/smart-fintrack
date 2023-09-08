@@ -1,19 +1,19 @@
-import { createStore } from "zustand";
+import { create } from "zustand";
 
 type State = {
-  count: number;
+  connected: boolean;
 };
 
 const initialState: State = {
-  count: 0,
+  connected: false,
 };
 type Actions = {
-  updateActivityBadge: (count: number) => void;
+  updatePusherStatus: (value: boolean) => void;
 };
 
-export const useActivityStore = createStore<State & Actions>()((set) => ({
+export const useActivityStore = create<State & Actions>()((set) => ({
   ...initialState,
-  updateActivityBadge(count: number) {
-    set({ count });
+  updatePusherStatus(value) {
+    set({ connected: value });
   },
 }));

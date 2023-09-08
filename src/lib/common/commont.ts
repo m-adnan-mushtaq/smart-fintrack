@@ -10,6 +10,7 @@ import AccountSvg from "@/components/svg/AccountSvg";
 import LockSvg from "@/components/svg/LockSvg";
 import VerifySvg from "@/components/svg/VerifySvg";
 import BellSvg from "@/components/svg/BellSvg";
+import { getBasePath } from "../utils/utils";
 
 export const SITE_TITLE = "Smart Fintrack - ";
 export const SALT_ROUNDS = 10;
@@ -248,3 +249,13 @@ export const PROFILE_LINKS = [
     Icon: BellSvg,
   },
 ];
+
+
+export const QUERY_TAGS = {
+  unreadActivityLog: "UNREAD_ACTIVITY_LOG",
+  activityLog: "ACTVIITY_LOG",
+} as const;
+
+export type QUERY_TAGS_KEYS = (typeof QUERY_TAGS)[keyof typeof QUERY_TAGS];
+
+export const UNREAD_ACTIVITY_LOG_ROUTE=(id:string)=>`${getBasePath()}/api/v1/admin/activity-logs/${id}/unread`

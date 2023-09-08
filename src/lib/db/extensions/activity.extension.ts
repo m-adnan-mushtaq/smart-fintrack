@@ -5,7 +5,6 @@ import { ActivityI, ActivityLogType } from "@/lib/types-server";
 
 export default Prisma.defineExtension((client) => {
   return client.$extends({
-    name: "activity-extension",
     /***********************************/
     /* ACTIVITY LOG CUSTOM VALIDATION */
     /***********************************/
@@ -28,7 +27,7 @@ export default Prisma.defineExtension((client) => {
         /***********************************/
         async findMany({ args, query }) {
           const actualActivities = await query(args);
-          if(!actualActivities.length) return []
+          if (!actualActivities.length) return [];
           const modifiedActivities: ActivityI[] = actualActivities.map(
             (activity) => {
               const actorName =
@@ -58,6 +57,8 @@ export default Prisma.defineExtension((client) => {
               }
 
               return {
+                id: activity.id!,
+                isRead: activity.isRead!,
                 sender: actorName as string,
                 activityDescription,
                 activityLink,
@@ -65,7 +66,7 @@ export default Prisma.defineExtension((client) => {
               };
             }
           );
-          return modifiedActivities
+          return modifiedActivities;
         },
       },
     },

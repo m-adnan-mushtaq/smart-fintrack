@@ -2,6 +2,7 @@ import { DbUser } from "../types";
 import { getServerSession } from "next-auth";
 import { authConfig } from "../config";
 import { NextResponse } from "next/server";
+import { logger } from "../services";
 
 /***********************************/
 /* FILE CONTAINS HELPER FUNCTION FOR API ROUTES*/
@@ -39,5 +40,6 @@ export function returnErrorResponse(error: any) {
   } else if (error instanceof Error) {
     message = error.message;
   }
+  logger.error(message)
   return NextResponse.json({ success: false, message }, { status: statusCode });
 }

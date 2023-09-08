@@ -26,7 +26,7 @@ const AdminNav = () => {
         </label>
       </div>
       <div className="flex-none gap-4">
-        <ActivityLogs/>
+          <ActivityLogs/>
         <AuthMenu size={40} bg="neutral" />
       </div>
     </nav>

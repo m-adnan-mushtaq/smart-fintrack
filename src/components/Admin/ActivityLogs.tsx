@@ -1,41 +1,72 @@
-"use client";
+import { ActivityI } from "@/lib/types-server";
+import Link from "next/link";
+import { useTransition } from "react";
+import { AuxProps } from "@/lib/types";
+import { showErrorToast } from "@client/helpers";
+import { markActivityAsRead } from "@/lib/actions";
 
-import { PUSHER_EVENTS } from "@/lib/types-server";
-import { getUserChannel } from "@/lib/utils/utils";
-import { useAuthStore } from "@/store";
-import Pusher from "pusher-js";
-import { useEffect } from "react";
-import { toast } from "react-hot-toast";
+async function fetchUnReadActivites(){
+}
 
-const ActivityLogs = () => {
-  const { user } = useAuthStore();
-
-  useEffect(() => {
-    const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
-      cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
-      channelAuthorization: {
-        endpoint: "/api/pusher/auth",
-        transport: "ajax",
-      },
+const FetchActivityLogs = ({ activities }: { activities: ActivityI[] }) => {
+  const [isPending, startTransition] = useTransition();
+  const markActivityReadHandler = (id: string, path: string) => {
+    startTransition(async () => {
+      try {
+        const { success, message } = await markActivityAsRead(id);
+        if (!success) throw Error(message);
+      } catch (error) {
+        showErrorToast(error);
+      }
     });
-    const channelName = getUserChannel(user?.id as string);
-    const userChannel = pusher.subscribe(channelName);
-    userChannel.bind(PUSHER_EVENTS.profileUpdated, (data: GenericObject) => {
-      console.log({ data });
-    });
+  };
+  return (
+    <div className="card-body">
+      <span className="font-bold text-lg menu-title text-center">
+        Notifications
+      </span>
+      {!activities.length ? (
+        <p className="text-lg text-center capitalize text-slate-300 my-2">
+          you have peformed no activities. :&#41;
+        </p>
+      ) : (
+        <ul>
+          {activities.map((activity) => (
+            <li className="truncate" key={activity.id}>
+              <Link
+                className={`${
+                  !activity.isRead
+                    ? "bg-base-100 bg-opacity-25  h-full w-full flex items-center  p-2 border-b-2 border-neutral text-accent font-semibold "
+                    : " link-primary"
+                } link link-hover capitalize`}
+                href="javascript:;"
+                prefetch={false}
+                aria-disabled={isPending}
+                onClick={(e) => {
+                  e.preventDefault();
+                  markActivityReadHandler(activity.id, activity.activityLink);
+                }}
+              >
+                {activity.activityDescription}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
 
-    userChannel.bind("pusher:subscription_succeeded",()=>{
-      toast.success("puhser service is connected!")
-    })
-    userChannel.bind("pusher:subscription_error",()=>{
-      toast.error("puhser service error")
-    })
-    return () => {
-      pusher.unsubscribe(channelName);
-      pusher.disconnect()
-    };
-  }, []);
+      <div className="card-actions">
+        <Link
+          href="/admin/profile/activity"
+          className="btn btn-sm btn-ghost btn-block"
+        >
+          view all
+        </Link>
+      </div>
+    </div>
+  );
+};
 
+const ActivityLogs = async () => {
   return (
     <div className="dropdown dropdown-end">
       <div
@@ -58,31 +89,19 @@ const ActivityLogs = () => {
                 d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
               />
             </svg>
-            <span className="badge badge-sm indicator-item">1</span>
+            {count > 0 && (
+              <span className="badge badge-sm indicator-item badge-accent">
+                {count}
+              </span>
+            )}
           </div>
         </label>
       </div>
-
       <div
         tabIndex={0}
-        className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-neutral shadow"
+        className="mt-3 z-[1] card card-compact dropdown-content w-[24rem] bg-neutral shadow"
       >
-        <div className="card-body">
-          <span className="font-bold text-lg menu-title text-center">
-            Notifications
-          </span>
-          <ul>
-            <li className="truncate">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut
-              aliquid, excepturi minima ad culpa ducimus quidem sapiente rerum
-              tempore ratione consequatur numquam suscipit sequi voluptas
-              doloremque aliquam voluptate saepe repellat.
-            </li>
-          </ul>
-          <div className="card-actions">
-            <button className="btn btn-sm btn-ghost btn-block">view all</button>
-          </div>
-        </div>
+        {children}
       </div>
     </div>
   );

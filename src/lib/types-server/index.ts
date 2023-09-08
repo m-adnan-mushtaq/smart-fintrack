@@ -10,8 +10,6 @@ export const enum JOB_NAMES {
 }
 
 export const enum PUSHER_EVENTS{
-  emailUpdated="email-updated",
-  passwordUpdated="password-updated",
   profileUpdated="profile-updated",
 }
 
@@ -19,8 +17,10 @@ export type {ActivityT} from "@/lib/db/validation"
 
 export type ActivityLogType=Pick<ActivityT, "type">["type"]
 export type ActivityI = {
+  id:string,
   sender:string,
   activityLink:string
   activityDescription:string,
+  isRead:boolean,
   type:ActivityLogType
 }

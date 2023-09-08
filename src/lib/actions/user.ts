@@ -1,5 +1,4 @@
 "use server";
-
 import { Prisma } from "@prisma/client";
 import prismaClient from "@/lib/db/client";
 import {
@@ -7,9 +6,10 @@ import {
   reformActionErrorHelper,
 } from "@/lib/utils/server-utils";
 import { ActionResponse } from "@/lib/types";
-import { getUserChannel, handleActionResponse } from "../utils/utils";
-import { PasswordServie, pusher } from "../services";
-import { PUSHER_EVENTS } from "../types-server";
+import { handleActionResponse } from "../utils/utils";
+import { PasswordServie } from "../services";
+import { ActivityLogType } from "../types-server";
+import { createUserActivity } from ".";
 
 export async function updateSecurityCredentials(
   id: string,
@@ -41,13 +41,18 @@ export async function updateUser(
     const cacheKey1 = prepareInvalideKey("User", foundUser.email);
     const cacheKey2 = prepareInvalideKey("User", foundUser.id);
     await prismaClient.user.update(updateArgs as any);
+    let logType: ActivityLogType = "PROFILE_UPDATED";
+    if ("email" in updateArgs.data) logType = "EMAIL_UPDATED";
+    if ("password" in updateArgs.data) logType = "PASSWORD_UPDATED";
     //invalidate cache against user model
     await prismaClient.user.invalidateCache([cacheKey1, cacheKey2]);
-    await pusher.trigger(
-      getUserChannel(foundUser.id),
-      PUSHER_EVENTS.profileUpdated,
-      { message: "show activiy log", refetch: true }
-    );
+    await createUserActivity({
+      type: logType,
+      recipientId: foundUser.id,
+      senderId:foundUser.id,
+      entityId: foundUser.id,
+      isRead: false,
+    });
     return {
       success: true,
       message: "Profile got updated!",

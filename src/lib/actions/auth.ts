@@ -7,7 +7,7 @@ import { emailQueue } from "../services/jobs.service";
 import { Prisma } from "@prisma/client";
 import { JOB_NAMES } from "../types-server";
 import { handleActionResponse } from "../utils/utils";
-import { updateUser } from ".";
+import {  updateUser } from ".";
 
 export async function createUser(
   user: CreateUserType

@@ -1,5 +1,5 @@
 import { ZodError } from "zod";
-import { ActionResponse } from "../types";
+import { ActionResponse , FetchOptions } from "../types";
 /***********************************/
 /* FILE CONTAINS HELPER FUNCTION FOR OVERALL*/
 /***********************************/
@@ -45,5 +45,18 @@ async function handleActionResponse(
 
 export function getUserChannel(userId:string){
   return `private-user-${userId}`
+}
+
+export function getBasePath(){
+  return `http://localhost:3000`
+}
+
+export async function useFetch<T>(url: string, options: FetchOptions):Promise<T> {
+  const response = await fetch(url, {
+    next: options,
+    // headers: headers(),
+  });
+  if (!response.ok || response.status >= 310) throw Error(response.statusText);
+  return response.json();
 }
 export { ValidationErrors, combinedErrorMap, handleActionResponse };
