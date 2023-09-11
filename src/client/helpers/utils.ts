@@ -29,10 +29,9 @@ export function getUserChannel(userId:string){
 }
 
 
-export async function useFetch<T>(url: string, options: FetchOptions):Promise<T> {
+export async function fetchData<T>(url: string, options: FetchOptions):Promise<T> {
   const response = await fetch(url, {
     next: options,
-    // headers: headers(),
   });
   if (!response.ok || response.status >= 310) throw Error(response.statusText);
   return response.json();

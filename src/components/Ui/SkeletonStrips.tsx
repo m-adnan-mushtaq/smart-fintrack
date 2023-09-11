@@ -1,8 +1,8 @@
 const SkeletonStrips = ({ count }: { count: number }) => {
   return (
-    <ul className="w-full max-w-screen-md mx-auto space-y-3">
-      {new Array(count).map((_, i) => (
-        <li key={i} className="w-full h-4 bg-gray-700 rounded-md"></li>
+    <ul className="w-full  mx-auto space-y-3 my-4">
+      {(new Array(count).fill(1)).map((_, i) => (
+        <li key={i} className="w-full h-4 bg-blue-950 rounded-md"></li>
       ))}
     </ul>
   );

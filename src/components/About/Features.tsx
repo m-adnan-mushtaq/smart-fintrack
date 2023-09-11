@@ -1,7 +1,6 @@
+import { featuresData } from "@/client/common";
 import Line from "@/components/Layout/Line";
 import Title from "@/components/Layout/Title";
-import { featuresData } from "@/lib/common/commont";
-
 
 
 const FeatureCard = ({

@@ -1,3 +1,4 @@
+import { ActivityI } from "@/lib/types";
 import { FieldError, FieldValues, UseFormRegister } from "react-hook-form";
 
 type InputType = "text" | "email" | "password" | "file" | "number";
@@ -29,4 +30,10 @@ export interface MutationResponse<T> {
 
 export type TStepContent = "✓" | "?" | "✕" | "!";
 
-
+export type InfniteActivitesResponse={
+  activities:ActivityI[],
+  metadata:null | {
+    lastCursor:string,
+    hasNextPage:string
+  }
+}

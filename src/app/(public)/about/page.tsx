@@ -82,7 +82,7 @@ const AboutPage = () => {
             </p>
           </div>
         </div>
-        <div className="flex gap-10 flex-col">
+        <div className="flex gap-10 flex-col items-center justify-center">
           <LazyLoader>
             <Features />
           </LazyLoader>
@@ -95,10 +95,10 @@ const AboutPage = () => {
       </div>
       <div className="hero ">
         <div className="hero-content text-center">
-          <div className="max-w-screen-md bg-neutral rounded p-4">
-            <Title color="primary" type="level2" >Connecting Dreams,Reach Us Today!</Title>
+          <div className="max-w-screen-md bg-neutral rounded-xl p-8">
+            <Title color="primary" type="level3" >Connecting Dreams,Reach Us Today!</Title>
             <Line type="primary" />
-            <p className="py-6 capitalize">
+            <p className="py-6 capitaliz text-sm text-slate-400">
             don't hesitate to reach out. Your aspirations are important to us, and we're ready to provide personalized support and guidance. Connect with us today and let's shape a brighter financial future together!
             </p>
             <Link href="/support" className="btn btn-primary">Reach Us</Link>

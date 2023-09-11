@@ -1,7 +1,7 @@
 import Title from "@/components/Layout/Title";
 import SupportFrom from "@/components/Support/Form";
 import Wave from "@/components/svg/WaveSvg";
-import { SITE_TITLE } from "@/lib/common";
+import { SITE_TITLE } from "@/lib/common/common";
 import { Metadata } from "next";
 
 const style="w-16 h-16 hover:fill-primary cursor-pointer"

@@ -31,6 +31,11 @@ export function payloadBuilder(message: string) {
   };
 }
 
+/**
+ * 
+ * @param error 
+ * @returns API Response with automatically apopriate status
+ */
 export function returnErrorResponse(error: any) {
   let message: string = "API ERROR";
   let statusCode: number = 500;

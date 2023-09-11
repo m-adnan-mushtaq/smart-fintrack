@@ -1,7 +1,7 @@
-import AuthMenu from "@/components/Auth/AuthMenu";
-import ActivityLogs from "./ActivityLogs";
 import { Suspense } from "react";
-import{ SpinnerSm } from "../Layout/Spinner";
+import AuthMenu from "@/components/Auth/AuthMenu";
+import ActivityLogs from "@/components/ActivityLog/ActivityLogs";
+import{ SpinnerSm } from "@/components/Layout/Spinner";
 
 const AdminNav = () => {
   return (

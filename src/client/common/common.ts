@@ -10,7 +10,7 @@ import AccountSvg from "@/components/svg/AccountSvg";
 import LockSvg from "@/components/svg/LockSvg";
 import VerifySvg from "@/components/svg/VerifySvg";
 import BellSvg from "@/components/svg/BellSvg";
-import { currencies } from "@/lib/common";
+import { currencies } from "@/lib/common/common";
 
 export const SALT_ROUNDS = 10;
 export const features: Feature[] = [
@@ -188,4 +188,4 @@ export const PROFILE_LINKS = [
   },
 ];
 
-
+export const GET_USER_ACTIVITIES_API_URL=`http://localhost:3000/api/v1/admin/activity-logs`
