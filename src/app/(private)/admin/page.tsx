@@ -1,6 +1,5 @@
-// export const dynamic = "force-cache";
 import GraphLoader from "@/components/Ui/GraphLoader";
-import { SITE_TITLE } from "@/lib/common/commont";
+import { SITE_TITLE } from "@lib/common/common";
 import type { Metadata } from "next";
 const AdminComponent = async () => {
   return (
@@ -14,7 +13,7 @@ export const metaDate:Metadata={
   title:SITE_TITLE+'Dashboard'
 }
 
-const page = async () => {
+const page = () => {
   return (
     <GraphLoader>
       <AdminComponent />
@@ -24,4 +23,3 @@ const page = async () => {
 
 export default page;
 
-export const revalidate = "force-cache";

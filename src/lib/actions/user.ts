@@ -2,13 +2,13 @@
 import { Prisma } from "@prisma/client";
 import prismaClient from "@/lib/db/client";
 import {
+  handleActionResponse,
   prepareInvalideKey,
   reformActionErrorHelper,
-} from "@/lib/utils/server-utils";
+} from "@/lib/utils/utils";
 import { ActionResponse } from "@/lib/types";
-import { handleActionResponse } from "../utils/utils";
-import { PasswordServie } from "../services";
-import { ActivityLogType } from "../types-server";
+import { PasswordServie } from "@lib/services";
+import { ActivityLogType } from "@lib/types";
 import { createUserActivity } from ".";
 
 export async function updateSecurityCredentials(

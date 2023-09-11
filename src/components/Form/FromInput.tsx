@@ -1,4 +1,4 @@
-import { TInput } from "@/lib/types";
+import { TInput } from "@client/types";
 import { FieldValues } from "react-hook-form";
 
 const FromInput = <TKeys, TUserType extends FieldValues>({

@@ -1,11 +1,11 @@
 import { Prisma } from "@prisma/client";
-import { UserDbInput } from "../validation";
+import { UserDbInput } from "@lib/db/validation";
 import { CreateUserType } from "@/lib/dto";
 import { PasswordServie } from "@/lib/services";
 
-export default Prisma.defineExtension((client)=>{
+export default Prisma.defineExtension((client) => {
   return client.$extends({
-    name:"user-extension",
+    name: "user-extension",
     model: {
       user: {
         /***********************************/
@@ -60,5 +60,5 @@ export default Prisma.defineExtension((client)=>{
         },
       },
     },
-  })
-})
+  });
+});

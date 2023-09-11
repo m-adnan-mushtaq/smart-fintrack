@@ -1,72 +1,10 @@
-import { ActivityI } from "@/lib/types-server";
 import Link from "next/link";
-import { useTransition } from "react";
-import { AuxProps } from "@/lib/types";
-import { showErrorToast } from "@client/helpers";
-import { markActivityAsRead } from "@/lib/actions";
-
-async function fetchUnReadActivites(){
-}
-
-const FetchActivityLogs = ({ activities }: { activities: ActivityI[] }) => {
-  const [isPending, startTransition] = useTransition();
-  const markActivityReadHandler = (id: string, path: string) => {
-    startTransition(async () => {
-      try {
-        const { success, message } = await markActivityAsRead(id);
-        if (!success) throw Error(message);
-      } catch (error) {
-        showErrorToast(error);
-      }
-    });
-  };
-  return (
-    <div className="card-body">
-      <span className="font-bold text-lg menu-title text-center">
-        Notifications
-      </span>
-      {!activities.length ? (
-        <p className="text-lg text-center capitalize text-slate-300 my-2">
-          you have peformed no activities. :&#41;
-        </p>
-      ) : (
-        <ul>
-          {activities.map((activity) => (
-            <li className="truncate" key={activity.id}>
-              <Link
-                className={`${
-                  !activity.isRead
-                    ? "bg-base-100 bg-opacity-25  h-full w-full flex items-center  p-2 border-b-2 border-neutral text-accent font-semibold "
-                    : " link-primary"
-                } link link-hover capitalize`}
-                href="javascript:;"
-                prefetch={false}
-                aria-disabled={isPending}
-                onClick={(e) => {
-                  e.preventDefault();
-                  markActivityReadHandler(activity.id, activity.activityLink);
-                }}
-              >
-                {activity.activityDescription}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
-
-      <div className="card-actions">
-        <Link
-          href="/admin/profile/activity"
-          className="btn btn-sm btn-ghost btn-block"
-        >
-          view all
-        </Link>
-      </div>
-    </div>
-  );
-};
+import { getUnReadActivitlyLogs } from "@/lib/queries/rsc-queries";
+import ActivityList from "./ActivityList";
 
 const ActivityLogs = async () => {
+  const { activities, count } = await getUnReadActivitlyLogs();
+
   return (
     <div className="dropdown dropdown-end">
       <div
@@ -101,7 +39,27 @@ const ActivityLogs = async () => {
         tabIndex={0}
         className="mt-3 z-[1] card card-compact dropdown-content w-[24rem] bg-neutral shadow"
       >
-        {children}
+        <div className="card-body">
+          <span className="font-bold text-lg menu-title text-center">
+            Notifications
+          </span>
+          {!activities.length ? (
+            <p className="text-lg text-center capitalize text-slate-300 my-2">
+              you have peformed no activities. :&#41;
+            </p>
+          ) : (
+            <ActivityList activities={activities} />
+          )}
+
+          <div className="card-actions">
+            <Link
+              href="/admin/profile/activity"
+              className="btn btn-sm btn-ghost btn-block"
+            >
+              view all
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );

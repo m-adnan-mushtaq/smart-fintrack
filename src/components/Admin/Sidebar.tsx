@@ -1,5 +1,5 @@
 "use client";
-import { AuxProps } from "@/lib/types";
+import { AuxProps } from "@/client/types";
 import Image from "next/image";
 import Link from "next/link";
 import AdminLinks, { ProfileLinks } from "./AdminLinks";

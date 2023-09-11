@@ -4,7 +4,8 @@ import LazyLoader from "@/components/Layout/LazyLoader";
 import Line from "@/components/Layout/Line";
 import Title from "@/components/Layout/Title";
 import Wave from "@/components/svg/WaveSvg";
-import { SITE_TITLE } from "@/lib/common/commont";
+import { SITE_TITLE } from "@lib/common/common";
+
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";

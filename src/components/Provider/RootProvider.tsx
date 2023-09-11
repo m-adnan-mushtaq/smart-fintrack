@@ -1,5 +1,5 @@
 "use client";
-import { AuxProps } from "@/lib/types/types";
+import { AuxProps } from "@client/types";;
 import { SessionProvider } from "next-auth/react";
 import AuthGlobalProvider from "./AuthGlobalProvider";
 

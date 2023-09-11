@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
-import { AuxProps, DbUser } from "@/lib/types";
-import { useAuthStore } from "@/store";
+import {  DbUser } from "@/lib/types";
+import { useAuthStore } from "@/client/store";
 import { useSession } from "next-auth/react";
 import PublicPageLoader from "../Layout/PublicPageLoader";
+import { AuxProps } from "@/client/types";
 
 const AuthGlobalProvider = ({ children }: AuxProps) => {
   const { status, data } = useSession();

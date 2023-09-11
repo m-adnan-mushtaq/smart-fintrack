@@ -1,3 +1,4 @@
+
 type GenericObject = Record<string, any>;
 
 declare type Prettify<T> = {

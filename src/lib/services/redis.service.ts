@@ -13,11 +13,11 @@ export class RedisService {
         port: parseInt(env.REDIS_LOCAL_PORT),
         host: env.REDIS_LCOAL_HOST,
       });
-      RedisService.instance.on("connect", () => {
+      RedisService.instance.once("connect", () => {
         logger.info("redis service is connceted!");
         RedisService.connected = true;
       });
-      RedisService.instance.on("error", (error) => {
+      RedisService.instance.once("error", (error) => {
         RedisService.connected = false;
         logger.error("REDIS ERROR => ", error.message);
       });

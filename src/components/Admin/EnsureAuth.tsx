@@ -1,6 +1,6 @@
 "use client";
-import { AuxProps } from "@/lib/types";
-import { useAuthStore } from "@/store";
+import { AuxProps } from "@client/types";;
+import { useAuthStore } from "@/client/store";
 import { redirect } from "next/navigation";
 
 const EnsureAuth = ({ children }: AuxProps) => {

@@ -1,7 +1,7 @@
 "use client"
 import { sendSupportEmail } from "@/lib/actions";
 import { HandleValidationErrors, MessageDto } from "@/lib/dto";
-import { combinedErrorMap } from "@/lib/utils/utils";
+import { combinedErrorMap } from "@/client/helpers/utils";
 import { toast } from "react-hot-toast";
 import SendSupportMsg from "./SendSupportMsg";
 import { ElementRef, useRef, useTransition } from "react";

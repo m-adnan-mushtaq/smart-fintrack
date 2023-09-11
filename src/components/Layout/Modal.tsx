@@ -1,4 +1,4 @@
-import { AuxProps } from "@/lib/types/types";
+import { AuxProps } from "@client/types";;
 import { ElementRef, forwardRef } from "react";
 import LoadingButton from "./LoadingButton";
 interface ModalProps extends AuxProps{

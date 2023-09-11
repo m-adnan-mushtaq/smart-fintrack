@@ -1,5 +1,5 @@
 "use client";
-import { PROFILE_LINKS, featuresData } from "@/lib/common/commont";
+import { PROFILE_LINKS, featuresData } from "@/client/common";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 

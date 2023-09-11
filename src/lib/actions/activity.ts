@@ -1,25 +1,20 @@
 "use server";
 
 import prismaClient from "../db/client";
-import { logger, pusher } from "../services";
-import {
-  getUserChannel,
-  reformActionErrorHelper,
-  returnErrorResponse,
-} from "../utils";
-import { ActivityT, PUSHER_EVENTS } from "../types-server";
+import { logger } from "../services";
+import { reformActionErrorHelper } from "../utils";
+import { ActivityT, SUPPORTED_TAGS } from "../types";
 import { ActionResponse } from "../types";
+import { revalidateTag } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function createUserActivity(
   payload: ActivityT
 ): Promise<ActionResponse> {
   try {
     await prismaClient.activityLog.create({ data: payload });
-    await pusher.trigger(
-      getUserChannel(payload.recipientId as string),
-      PUSHER_EVENTS.profileUpdated,
-      { message: "refetch activiy logs", refetch: true }
-    );
+    const invalideTag: SUPPORTED_TAGS = "unread-activities";
+    revalidateTag(invalideTag);
     logger.info(
       `User: ${payload.recipientId} activity: ${payload.type} created!`
     );
@@ -32,15 +27,19 @@ export async function createUserActivity(
   }
 }
 
-export async function markActivityAsRead(id: string): Promise<ActionResponse> {
+export async function markActivityAsRead(
+  id: string,
+): Promise<ActionResponse> {
   try {
     await prismaClient.activityLog.update({
       where: { id },
       data: { isRead: true },
     });
+    const tag: SUPPORTED_TAGS = "unread-activities";
+    revalidateTag(tag);
     return {
       success:true,
-      message:"Marked as read!"
+      message:"activity marked as read!"
     }
   } catch (error) {
     return reformActionErrorHelper(error);

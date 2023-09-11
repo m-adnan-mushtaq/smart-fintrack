@@ -10,7 +10,7 @@ import {
 } from "@/lib/actions";
 import { EmailDto, OtpDto } from "@/lib/dto";
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/store";
+import { useAuthStore } from "@/client/store";
 
 const modalId = "verify_modal";
 const SendEmail = () => {

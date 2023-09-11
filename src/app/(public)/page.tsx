@@ -1,7 +1,7 @@
 import Section from "@components/Home/Section";
 import Hero from "@components/Home/Hero";
 import Image from "next/image";
-import { features } from "@/lib/common/commont";
+import { features } from "@client/common";
 import Faq from "@/components/Home/Faq";
 import LazyLoader from "@/components/Layout/LazyLoader";
 const Home = () => {

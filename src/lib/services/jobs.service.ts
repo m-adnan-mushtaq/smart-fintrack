@@ -1,4 +1,4 @@
-import { JOB_NAMES, QUEUE_NAMES } from "@/lib/types-server";
+import { JOB_NAMES, QUEUE_NAMES } from "@/lib/types";
 import Bull, { Queue, JobOptions, Job } from "bull";
 import { EmailService} from "./email.service";
 import { logger } from "./logger.service";
@@ -64,4 +64,4 @@ class JobQueue {
   }
 }
 
-export const emailQueue = new JobQueue(QUEUE_NAMES.emailQueue);
+export const emailQueueService = new JobQueue(QUEUE_NAMES.emailQueueService);

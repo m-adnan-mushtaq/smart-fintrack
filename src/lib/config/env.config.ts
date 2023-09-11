@@ -19,6 +19,7 @@ const envSchema = z.object({
   PUSHER_KEY: z.string().nonempty(),
   PUSHER_SECRET: z.string().nonempty(),
   PUSHER_CLUSTER: z.string().nonempty(),
+  PRODUCTION_URL:z.string().nonempty(),
 });
 
 export type EnvSchemaType = z.infer<typeof envSchema>;

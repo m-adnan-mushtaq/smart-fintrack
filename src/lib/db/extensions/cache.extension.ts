@@ -1,10 +1,10 @@
 import { Prisma } from "@prisma/client";
-import { cacheMethods } from "@/lib/common/server-common";
+import { cacheMethods } from "@/lib/common/common";
 import { RedisService, logger, redis } from "@/lib/services";
 import {
   prepareCacheTime,
   prepareFindCacheKey,
-} from "@/lib/utils/server-utils";
+} from "@/lib/utils/utils";
 
 export default Prisma.defineExtension((client) => {
   return client.$extends({

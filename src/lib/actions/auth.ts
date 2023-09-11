@@ -1,14 +1,12 @@
 "use server";
 import prismaClient from "@/lib/db/client";
 import { CreateUserType } from "../dto";
-import { ActionResponse } from "../types/types";
-import { logger, otpService, pusher } from "../services";
-import { emailQueue } from "../services/jobs.service";
+import { ActionResponse } from "@lib/types"
+import { logger, otpService, pusher , emailQueueService} from "../services";
 import { Prisma } from "@prisma/client";
-import { JOB_NAMES } from "../types-server";
-import { handleActionResponse } from "../utils/utils";
+import { JOB_NAMES } from "../types";
 import {  updateUser } from ".";
-
+import { handleActionResponse } from "@lib/utils";
 export async function createUser(
   user: CreateUserType
 ): Promise<ActionResponse> {
@@ -63,7 +61,7 @@ export async function sendVerificationEmail(
   email: string
 ): Promise<ActionResponse> {
   try {
-    await emailQueue.addJob(JOB_NAMES.verifyEmail, { email });
+    await emailQueueService.addJob(JOB_NAMES.verifyEmail, { email });
     return {
       success: true,
       message: "Verification Email has been sent",
@@ -103,7 +101,7 @@ export async function verifyOtp(
 }
 export async function sendSupportEmail(data: GenericObject) {
   try {
-    await emailQueue.addJob(JOB_NAMES.supportEmail, data, {
+    await emailQueueService.addJob(JOB_NAMES.supportEmail, data, {
       delay: 5000,
       attempts: 1,
     });

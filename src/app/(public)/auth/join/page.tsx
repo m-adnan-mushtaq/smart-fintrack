@@ -1,6 +1,7 @@
 import JoinForm from "@/components/Auth/JoinForm";
 import VerifyInfo from "@/components/Auth/VerifyInfo";
-import { SITE_TITLE } from "@/lib/common/commont";
+import { SITE_TITLE } from "@lib/common/common";
+
 import { Metadata } from "next";
 import Link from "next/link";
 export const metadata:Metadata={

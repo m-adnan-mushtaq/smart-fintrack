@@ -1,5 +1,5 @@
 import { redis } from "@/lib/services";
-import { OPT_EXIPIRE_TIME } from "@/lib/common/commont";
+import { OPT_EXIPIRE_TIME } from "@/lib/common/common";
 
 class OtpService {
   constructor(private otpLen: number) {

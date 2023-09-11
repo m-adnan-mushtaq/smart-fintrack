@@ -1,6 +1,4 @@
 import { FieldError, FieldValues, UseFormRegister } from "react-hook-form";
-import { QUERY_TAGS_KEYS } from "../common/commont";
-import { ActivityI } from "../types-server";
 
 type InputType = "text" | "email" | "password" | "file" | "number";
 
@@ -31,11 +29,4 @@ export interface MutationResponse<T> {
 
 export type TStepContent = "✓" | "?" | "✕" | "!";
 
-export interface FetchOptions extends NextFetchRequestConfig {
-  tags: QUERY_TAGS_KEYS[];
-}
 
-export type UnReadActivityResponse = {
-  unReadCount: 0;
-  activityLogs: ActivityI[];
-};

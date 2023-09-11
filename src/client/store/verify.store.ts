@@ -1,6 +1,6 @@
 //store for updating email address
 import { create } from "zustand";
-import { TStepContent } from "@/lib/types";
+import { TStepContent } from "@client/types";
 
 type StepT = {
   label: string;

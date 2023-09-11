@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { ActivityLogSchema } from "../validation";
-import { PROFILE_ROUTE } from "@/lib/common/server-common";
-import { ActivityI, ActivityLogType } from "@/lib/types-server";
+import { ADMIN_PROFILE_LINK } from "@/lib/common/common";
+import { ActivityI, ActivityLogType } from "@/lib/types";
 
 export default Prisma.defineExtension((client) => {
   return client.$extends({
@@ -39,15 +39,15 @@ export default Prisma.defineExtension((client) => {
               switch (activity.type) {
                 case "EMAIL_UPDATED":
                   activityDescription = `${actorName} updated email address`;
-                  activityLink = `${PROFILE_ROUTE}`;
+                  activityLink = `${ADMIN_PROFILE_LINK}`;
                   break;
                 case "PASSWORD_UPDATED":
                   activityDescription = `${actorName} updated securty credentials`;
-                  activityLink = `${PROFILE_ROUTE}`;
+                  activityLink = `${ADMIN_PROFILE_LINK}`;
                   break;
                 case "PROFILE_UPDATED":
                   activityDescription = `${actorName} updated profile details`;
-                  activityLink = `${PROFILE_ROUTE}`;
+                  activityLink = `${ADMIN_PROFILE_LINK}`;
                   break;
                 case "BUDGET_ADDED":
                   activityDescription = `${actorName} added new budget template`;

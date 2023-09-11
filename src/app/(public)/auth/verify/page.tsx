@@ -1,6 +1,6 @@
 import SendEmail from "@/components/Auth/SendEmail";
 import Title from "@/components/Layout/Title";
-import { SITE_TITLE } from "@/lib/common/commont";
+import { SITE_TITLE } from "@/lib/common";
 import { Metadata } from "next";
 
 export const metadata:Metadata={

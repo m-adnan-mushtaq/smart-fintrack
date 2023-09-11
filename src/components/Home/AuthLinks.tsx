@@ -2,7 +2,7 @@
 import GoogleBtn from "../Auth/GoogleBtn"
 import Link from "next/link"
 import Email from "../svg/Email"
-import { useAuthStore } from "@/store"
+import { useAuthStore } from "@/client/store"
 
 const AuthLinks = () => {
  const {user}=useAuthStore()

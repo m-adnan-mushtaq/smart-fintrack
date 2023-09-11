@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
 import { toast } from "react-hot-toast";
-import { useAuthStore } from "@/store";
+import { useAuthStore } from "@/client/store";
 
 interface MenuProps {
   size: number;

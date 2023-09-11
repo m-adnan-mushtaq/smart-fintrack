@@ -1,1 +1,0 @@
-export type {DbUser} from "@/lib/db/client"

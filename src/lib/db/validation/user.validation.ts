@@ -1,10 +1,7 @@
+import { defaultAavatarUrl } from "@/client/common";
+import { currenciesEnum, defaultCurrency } from "@/lib/common/common";
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
-import {
-  currenciesEnum,
-  defaultAavatarUrl,
-  defaultCurrency,
-} from "../../common/commont";
 
 const currenciesArr = currenciesEnum();
 export const UserDbInput = z.object({

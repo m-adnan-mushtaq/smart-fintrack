@@ -1,10 +1,10 @@
 "use client";
 import { useMemo } from "react";
 import { useForm } from "react-hook-form";
-import { logInputs } from "@/lib/common/commont";
+import { logInputs } from "@client/common";
 import FormInput from "@components/Form/FromInput";
 import GoogleBtn from "./GoogleBtn";
-import Email from "../svg/Email";
+import Email from "@svg/Email";
 import LoadingButton from "../Layout/LoadingButton";
 import { signIn } from "next-auth/react";
 import { HandleValidationErrors, LoginDto,  LoginUserType } from "@/lib/dto";

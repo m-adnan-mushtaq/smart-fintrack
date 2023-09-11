@@ -1,5 +1,7 @@
-import AuthMenu from "../Auth/AuthMenu";
+import AuthMenu from "@/components/Auth/AuthMenu";
 import ActivityLogs from "./ActivityLogs";
+import { Suspense } from "react";
+import{ SpinnerSm } from "../Layout/Spinner";
 
 const AdminNav = () => {
   return (
@@ -26,7 +28,9 @@ const AdminNav = () => {
         </label>
       </div>
       <div className="flex-none gap-4">
-          <ActivityLogs/>
+        <Suspense fallback={<SpinnerSm/>}>
+          <ActivityLogs />
+        </Suspense>
         <AuthMenu size={40} bg="neutral" />
       </div>
     </nav>

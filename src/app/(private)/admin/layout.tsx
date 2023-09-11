@@ -2,7 +2,7 @@ import AdminNav from "@/components/Admin/AdminNav";
 import EnsureAuth from "@/components/Admin/EnsureAuth";
 import SidebarLayout from "@/components/Admin/Sidebar";
 import QueryProvider from "@/components/Provider/QueryProvider";
-import { AuxProps } from "@/lib/types";
+import { AuxProps } from "@client/types";
 
 const layout = ({ children }: AuxProps) => {
   return (

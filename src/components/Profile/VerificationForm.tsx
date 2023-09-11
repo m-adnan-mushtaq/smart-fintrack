@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuthStore, useVerifyStore } from "@/store";
+import { useAuthStore, useVerifyStore } from "@/client/store";
 import { ElementRef, useRef, useTransition } from "react";
 import LoadingButton from "../Layout/LoadingButton";
 import { EmailDto, HandleValidationErrors, OtpDto } from "@/lib/dto";
@@ -11,7 +11,7 @@ import {
   verifyOtp,
 } from "@/lib/actions";
 import Title from "../Layout/Title";
-import { combinedErrorMap } from "@/lib/utils/utils";
+import { combinedErrorMap } from "@/client/helpers/utils";
 import { signOut} from "next-auth/react";
 
 const EmailStep = () => {

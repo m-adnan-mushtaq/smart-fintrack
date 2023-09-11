@@ -1,4 +1,4 @@
-import { features, menuLinks } from "@/lib/common/commont";
+import { features, menuLinks } from "@/client/common";
 import Link from "next/link";
 import React from "react";
 import Logo from "./Logo";

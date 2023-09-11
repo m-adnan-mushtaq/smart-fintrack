@@ -1,5 +1,5 @@
-import { SEKELETON_COLOR } from "@/lib/common/commont";
-import { AuxProps } from "@/lib/types";
+import { SEKELETON_COLOR } from "@client/common";
+import { AuxProps } from "@client/types";;
 import { Suspense } from "react";
 const Loader = () => {
   return (

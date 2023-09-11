@@ -1,6 +1,6 @@
 "use client";
 import { useTransition } from "react";
-import { joinInputs } from "@/lib/common/commont";
+import { joinInputs } from "@client/common";
 import FormInput from "@components/Form/FromInput";
 import GoogleBtn from "@components/Auth/GoogleBtn";
 import Email from "@components/svg/Email";
@@ -12,7 +12,7 @@ import { toast } from "react-hot-toast";
 import LoadingButton from "../Layout/LoadingButton";
 import { useForm, FormProvider} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAuthStore } from "@/store";
+import { useAuthStore } from "@/client/store";
 
 const JoinFrom = () => {
   const router = useRouter();

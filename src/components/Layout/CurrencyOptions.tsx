@@ -1,4 +1,4 @@
-import { currencies } from "@/lib/common/commont";
+import { currencies } from "@/lib/common/common";
 import { CreateUserKeys} from "@/lib/dto";
 import {  memo, useMemo, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
@@ -8,7 +8,7 @@ const CurrencyOptions = () => {
   const [open, SetOpen] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");
   const { control, setValue } = useFormContext();
-  const currencyDefaultValue = useWatch({ control, name: currencyKey });
+  const _currencyDefaultValue = useWatch({ control, name: currencyKey });
 
   const clickHandler = (event: React.MouseEvent<HTMLLIElement>) => {
     event.stopPropagation();
@@ -21,7 +21,6 @@ const CurrencyOptions = () => {
   };
   const filteredList = useMemo(() => {
     const regex = new RegExp(input, "igm");
-    // if(!input.length) return currencies
     return currencies.filter(
       (currency) => regex.test(currency.name) || regex.test(currency.symbol)
     );

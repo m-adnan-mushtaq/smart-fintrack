@@ -1,5 +1,5 @@
 import Title from "@/components/Layout/Title";
-import { menuLinks } from "@/lib/common/commont";
+import { menuLinks } from "@client/common";
 import svg from "@/media/404.svg";
 import Image from "next/image";
 import Link from "next/link";

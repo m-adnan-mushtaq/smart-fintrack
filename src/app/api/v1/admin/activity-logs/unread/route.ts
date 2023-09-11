@@ -1,16 +1,12 @@
 import prismaClient from "@/lib/db/client";
-import { IdDto } from "@/lib/dto/user.dto";
-import { returnErrorResponse } from "@/lib/utils";
+import { getLoggedUser, returnErrorResponse } from "@/lib/utils";
 import { NextResponse } from "next/server";
 
-export async function GET(
-  _request: Request,
-  { params }: { params: { id: string } }
-) {
+export async function GET() {
   try {
     // grab user related activit logs
-    const id = IdDto.parse(params.id);
-    const [unReadCount, activityLogs] = await Promise.all([
+    const {id} = await getLoggedUser()
+    const [count, activities] = await Promise.all([
       prismaClient.activityLog.count({
         where: {
           recipientId: id,
@@ -22,10 +18,10 @@ export async function GET(
         orderBy: {
           createdAt: "desc",
         },
-        where: { recipientId: id},
+        where: { recipientId: id },
       }),
     ]);
-    return NextResponse.json({ unReadCount, activityLogs });
+    return NextResponse.json({ count, activities });
   } catch (error) {
     return returnErrorResponse(error);
   }

@@ -1,5 +1,5 @@
 "use client";
-import { menuLinks } from "@/lib/common/commont";
+import { menuLinks } from "@client/common";
 import Link from "next/link";
 import { usePathname} from 'next/navigation'
 

@@ -1,14 +1,15 @@
 "use client";
 import { DbUser } from "@/lib/types";
-import { useAuthStore } from "@/store";
+import { useAuthStore } from "@/client/store";
 import { useSession } from "next-auth/react";
 import { experimental_useFormStatus as useFormStatus } from "react-dom";
 import LoadingButton from "../Layout/LoadingButton";
 import { HandleValidationErrors, NameDto } from "@/lib/dto";
-import { combinedErrorMap, handleActionResponse } from "@/lib/utils/utils";
+import { combinedErrorMap} from "@/client/helpers/utils";
 import { updateUser } from "@/lib/actions";
 import { toast } from "react-hot-toast";
 import { useTransition } from "react";
+import { handleServerActionResponse } from "@/client/helpers";
 
 const ProfileForm = () => {
   const { user, setUser } = useAuthStore();
@@ -22,7 +23,7 @@ const ProfileForm = () => {
         if (user?.name === name) return;
         const parsedData = NameDto.safeParse({ name });
         if (!parsedData.success) throw combinedErrorMap(parsedData.error);
-        const successMessage = await handleActionResponse(
+        const successMessage = await handleServerActionResponse(
           updateUser({
             where: { id: user?.id },
             data: { name: parsedData.data.name },

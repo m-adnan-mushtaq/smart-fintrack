@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuthStore } from "@/store";
+import { useAuthStore } from "@/client/store";
 import Image from "next/image";
 
 const CameraIcon = () => (

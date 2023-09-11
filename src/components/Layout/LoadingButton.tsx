@@ -1,4 +1,4 @@
-import { AuxProps } from "@/lib/types/types";
+import { AuxProps } from "@client/types";
 
 interface BtnProps extends AuxProps {
   type: ColorType;

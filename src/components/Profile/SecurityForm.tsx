@@ -7,8 +7,8 @@ import LoadingButton from "../Layout/LoadingButton";
 import { useMemo } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-hot-toast";
-import { useAuthStore } from "@/store";
-import { handleActionResponse } from "@/lib/utils/utils";
+import { useAuthStore } from "@/client/store";
+import { handleActionResponse } from "@/client/helpers/utils";
 import { updateSecurityCredentials } from "@/lib/actions";
 import { signOut } from "next-auth/react";
 
